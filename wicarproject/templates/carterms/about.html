@@ -1,0 +1,114 @@
+{% extends "base_temp.html"%}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/carshare/about_style.css')}}" >
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/carshare/general.css')}}" >
+{% endblock %}
+{% block content %}
+<div id="about" class="content-section-b" style="margin-top: 0px;">
+        <div class="container">
+            <div class="row">
+				<div class="col-xs-12 col-sm-6 pull-right wow fadeInRightBig animated animated" style="visibility: visible; animation-name: fadeInRightBig;">
+                    <img class="img-responsive " src="{{url_for('static',filename='images/sharemonsters.jpg')}}" alt="" style="height: 300px;">
+                </div>
+                <div class="col-xs-12 col-sm-6 wow fadeInLeftBig animated animated" data-animation-delay="200" style="visibility: visible; animation-name: fadeInLeftBig;">
+                    <h3 class="section-heading">쉐어몬스터즈 와이카 런칭</h3>
+                    <p class="lead">
+                        공유 자동차를 통해 기존의 렌트카업체가 가지고<br>
+                        있던 차량 유지비용을 줄여 사용자들에게 <br>
+                        낮은 가격의 상품을 제공하고<br>
+                        차주의 지갑을 행복하게 만들겠다는<br>
+                        신념아래 와이카 프로젝트가 시작되었습니다.
+					</p>
+				</div>
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+    <div id="members" class="content-section-a" style="border-top: 0">
+		<div class="container">
+            <div class="row">
+    			<div class="col-md-8 col-md-offset-2 text-center wrap_title">
+    				<h2>몬스터즈 소개</h2>
+    				<p class="lead" style="margin-top:0">쉐어몬스터즈를 이끌어가는 몬스터즈를 소개합니다. </p>
+    			</div>
+            </div>
+			<div class="row">
+				<div class="col-sm-4 wow fadeInDown text-center animated animated" onclick="show_member('thmon');" style="visibility: visible;">
+				  <img class="member" src="/static/images/members/thmon.png" alt="Generic placeholder image">
+				  <h3>태훈몬</h3>
+				  <p class="lead">
+                      UCLA 경제학전공 <br>
+                      TESLA KOREA 출고전략팀<br>
+                      쉐어몬스터즈 CEO
+                  </p>
+				   <p><a class="btn btn-embossed btn-primary view" role="button">자세히 보기</a></p>
+				</div><!-- /.col-lg-4 -->
+				<div class="col-sm-4 wow fadeInDown text-center animated animated" onclick="show_member('jkmon');" style="visibility: visible; animation-name: fadeInDown;">
+				  <img class="member" src="/static/images/members/jkmon.png" alt="Generic placeholder image">
+				   <h3>준규몬</h3>
+					<p class="lead">
+                        UCLA 국제개발학전공<br>
+                         TP ICAP U.S Treasury Desk근무<br>
+                        쉐어몬스터즈 COO
+                    </p>
+				   <p><a class="btn btn-embossed btn-primary view" role="button">자세히 보기</a></p>
+				</div><!-- /.col-lg-4 -->
+                <div class="col-sm-4 wow fadeInDown text-center animated animated" onclick="show_member('hmmon');" style="visibility: visible; animation-name: fadeInDown;">
+                  <img class="member" src="/static/images/members/hmmon.png" alt="Generic placeholder image">
+                   <h3>희명몬</h3>
+                   <p class="lead">
+                       한국외대 경제학전공 <br>
+                       홈마스터 데이터 엔지니어 <br>
+                       쉐어몬스터즈 CTO
+                   </p>
+                   <p><a class="btn btn-embossed btn-primary view" role="button">자세히 보기</a></p>
+                </div><!-- /.col-lg-4 -->
+			</div><!-- /.row -->
+		</div>
+	</div>
+{% endblock%}
+
+{% block script%}
+<script>
+    members = {};
+    members['thmon'] =  "김태훈 대표는 자동차 괴물입니다. 자동차 엔진소리만 들어도 어떠한 자동차인지 알아냅니다. 작년에는 테슬라에서 근무했으며 미국에서 카쉐어링을통해 2년간 차량을 운영하여 1년 ROI 70%를 달성한 경험이 있습니다.";
+    members['hjmon'] = "여호정 전략이사는 전략의 괴물입니다. 라프텔이라는 스타트업에서 18개월만에 10억 가치의 회사를 120억으로 성장시킨 전력이 있습니다.";
+    members['jkmon'] = "이준규 운영이사는 영업의 괴물입니다. 회사의 필요에 맞는 사람들을 설득하고 끌어들이는데 천부적인 재능이 있습니다. U.S Treasury Desk에서는 트레이더들을 채권계약으로 이끌었고 Fudan University 석사과정중에는 학생들을 Fudan Fintech Networking프로그램으로 UCLA 학사과정중에는 학생들을 술집으로 이끌었습니다.";
+    members['hmmon'] = "강희명 기술이사는 배움의 괴물입니다. 실생활에서 몸으로 부딪히는 배움을 통해 가장 가치있는 상품을 개발해나갑니다. 홈마스터에서는 키워드 검색 최적화 프로그램, 인력사무소 인력관리 프로그램을 개발하였고 현재는 와이카 개발에 몰두하고 있습니다.";
+    memberName = {};
+    memberName['thmon'] ='태훈몬';
+    memberName['hjmon'] ='호정몬';
+    memberName['jkmon'] ='준규몬';
+    memberName['hmmon'] ='희명몬';
+    function show_member(name) {
+        $("#memberModal .modal-title").html(memberName[name]);
+        $("#memberModal .modal-body .member-img img").attr("src", "/static/images/members/"+name+"2"+".png");
+        $("#memberModal .modal-body .member-content").html(members[name]);
+
+        $("#memberModal").modal('show');
+    }
+    </script>
+{% endblock %}
+{% block modal%}
+<div class="modal fade bs-example-modal-sm" id="memberModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+            <div class="member-img">
+                <img class="member2" src="/static/img/members/Rafy.jpeg" alt="">
+                <br><br>
+            </div>
+            <div class="member-content"></div>
+        </div>
+        <div class="modal-footer">
+
+        <button type="button" class="btn btn-block btn-primary" data-dismiss="modal">닫기</button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+{% endblock %}

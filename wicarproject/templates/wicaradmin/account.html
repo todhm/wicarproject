@@ -1,0 +1,100 @@
+{% extends "base_admin.html"%}
+{% block content %}
+    <br />
+    <div class="container-fluid">
+        <form action="{{url_for('wicar_admin_app.account_page')}}" method="POST">
+            {% from "_formhelpers.html" import render_field %}
+            {{form.hidden_tag()}}
+            <div class="row">
+                <div class="col-md-3">
+                    {{render_field(form.start_date,autocomplete="off")}}
+                </div>
+                <div class="col-md-3">
+                    {{render_field(form.end_date,autocomplete="off")}}
+                </div>
+                <div class="col-md-3">
+                    <button class="btn-primary" id="btn_date" type="submit">날짜변경</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container-fluid">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">예약시작일</th>
+                    <th scope="col">예약종료일</th>
+                    <th scope="col">차주</th>
+                    <th scope="col">대여자</th>
+                    <th scope="col">차주전화번호</th>
+                    <th scope="col">차주계좌주명</th>
+                    <th scope="col">차주계좌번호</th>
+                    <th scope="col">지급 금액</th>
+                    <th scope="col">예약확인</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for carBooking in carBookingList %}
+                    <tr>
+                        <th scope="row">{{loop.index}}</th>
+                        <td>{{carBooking.start_time.strftime("%Y-%m-%d %H:%M")}}</td>
+                        <td>{{carBooking.end_time.strftime("%Y-%m-%d %H:%M")}}</td>
+                        <td>{{carBooking.owner.name}}</td>
+                        <td>{{carBooking.renter.name}}</td>
+                        <td>{{carBooking.owner.phone}}</td>
+                        {%if carBooking.bank%}
+                            <td>{{carBooking.bank.account_holder_name}}</td>
+                            <td>{{carBooking.bank.account_num}}</td>
+                        {% else %}
+                            <td></td>
+                            <td></td>
+                        {%endif%}
+                        <td>{{carBooking.owner_earning}}</td>
+                        <td>
+                            <button class="btn-primary" onclick="changeBookingStatus('{{carBooking.id}}')">지급완료</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
+
+{% block script%}
+<script type="text/javascript">
+    var start_date = {{start_date|tojson}};
+    var end_date = {{end_date|tojson}};
+</script>
+<script src="{{ url_for('static',filename='js/wicaradmin/account_page.js')}}"></script>
+<script>
+console.log(start_date,end_date,typeof start_date)
+function changeBookingStatus(bookingId) {
+        $.ajax({
+            type: 'POST',
+            url: '/pay_complete/'+bookingId,
+            processData: false,
+            contentType: 'application/octet-stream; charset=utf-8',
+            success: function (result) {
+                // Handle or verify the server response if necessary.
+                if (result) {
+                    if (result['message']=="success") {
+                        alert("등록성공")
+                        $('#btn_date').click();
+                    } else {
+                        alert(result['errorMessage'])
+                    }
+                }
+            }
+            ,
+            error: function (result) {
+                $(".waitingResult").html(result.responseText)
+                setTimeout(function () {
+                    window.location.href = "/";
+                }, 1000);
+            }
+
+        });
+    }
+</script>
+{% endblock %}

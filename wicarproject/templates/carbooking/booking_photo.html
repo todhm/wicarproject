@@ -1,0 +1,12 @@
+{% extends "base_temp.html"%}
+
+{% block style%}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='wicar_react/build/static/css/main.78a77f43.css')}}">
+{% endblock %}
+{% block content%}
+    <div id="root"></div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{url_for('static',filename='wicar_react/build/static/js/main.e6d9b5ac.js')}}"></script>
+{% endblock %}

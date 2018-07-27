@@ -1,0 +1,15 @@
+{% extends "base.html"%}
+{% block style%}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='wicar_search/build/static/css/main.fe9414c2.css')}}">
+{% endblock %}
+
+{% block content%}
+    <div id="root_react"></div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        var queryUrl = {{url_for('carupload_api_app.return_address')|tojson}};
+    </script>
+    <script src="{{ url_for('static',filename='wicar_search/build/static/js/main.19e33db2.js' )}}"></script>
+{% endblock %}

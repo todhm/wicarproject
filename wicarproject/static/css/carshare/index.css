@@ -1,0 +1,417 @@
+.index_header{
+    background-image:url('/static/images/2018-honda-accord.jpg');
+    background-position: center top;
+    background-size: 100% auto;
+}
+.basic-wicar{
+    font-size:20px;
+}
+.indexhr{
+    margin-top:0px;
+    margin-bottom:0px;
+}
+.inputheader{
+    border-bottom:0px;
+}
+.indexform{
+    background-color:white;
+}
+.form-group{
+  margin-bottom:0px;
+}
+.form-group>label{
+  position: relative;
+}
+
+.form-group>input{
+  border:none;
+}
+
+.ui-datepicker-header{
+    background-color:black;
+    color:white;
+    }
+
+table{
+    background-color:grey;
+    width:100%;
+}
+.nav {
+    float: right;
+}
+.nav:before {
+    display: table;
+    content: ""}
+.nav:after {
+    display: table;
+    clear: both;
+    content: ""}
+.nav-item {
+    float: left;
+    margin-right: 20px;
+}
+@media (min-width: 768px) {
+    .nav-item {
+    margin-right: 25px;
+}
+}.nav-item:last-child {
+    margin-right: 0;
+}
+.nav-actionCounter {
+    padding: 0 5px;
+    border-radius: 10px;
+    background-color: #df4a32;
+    color: #fff;
+    font-size: 13px;
+    display: inline-block;
+    min-width: 17px;
+    height: 17px;
+    text-align: center;
+    line-height: 18px;
+}
+.nav-actionIndicator {
+    display: block;
+    width: 4px;
+    height: 4px;
+    background-color: #df4a32;
+    border-radius: 2px;
+    position: absolute;
+    top: 12px;
+    left: -2px;
+}
+.nav-itemText {
+    position: relative;
+    font-size: 13px;
+    color: #fff;
+    cursor: default;
+    height: 60px;
+    line-height: 60px;
+}
+.nav-itemText--link {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    display: inline;
+    cursor: pointer;
+}
+.nav-itemText--link:hover {
+    text-decoration: underline;
+}
+.nav-itemButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+}
+.nav-itemIcon {
+    display: inline-block;
+    vertical-align: middle;
+}
+.nav-itemIcon--arrow {
+    background-size: 512px 180px;
+    background-repeat: no-repeat;
+    background-image: url('/resources/img/header_icons.v4.png');
+    background-position: -193px -1px;
+    background-position-x: -191px;
+    width: 13px;
+    height: 6px;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5),  (min--moz-device-pixel-ratio: 1.5),  (min-resolution: 1.5dppx) {
+    .nav-itemIcon--arrow {
+    background-image: url('/resources/img/header_icons.v4@2x.png');
+}
+}.nav-itemIcon--messages {
+    background-size: 512px 180px;
+    background-repeat: no-repeat;
+    background-image: url('/resources/img/header_icons.v4.png');
+    background-position: -257px -1px;
+    width: 28px;
+    height: 26px;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5),  (min--moz-device-pixel-ratio: 1.5),  (min-resolution: 1.5dppx) {
+    .nav-itemIcon--messages {
+    background-image: url('/resources/img/header_icons.v4@2x.png');
+}
+}.nav-itemIcon--blankAvatar {
+    background-size: 512px 180px;
+    background-repeat: no-repeat;
+    background-image: url('/resources/img/header_icons.v4.png');
+    background-position: -321px -1px;
+    width: 32px;
+    height: 32px;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5),  (min--moz-device-pixel-ratio: 1.5),  (min-resolution: 1.5dppx) {
+    .nav-itemIcon--blankAvatar {
+    background-image: url('/resources/img/header_icons.v4@2x.png');
+}
+}.nav-item--subMenu {
+    font-family: BasisGrotesque,  Avenir,  Helvetica Neue,  Helvetica,  sans-serif;
+    font-weight: bold;
+    position: relative;
+    cursor: default;
+}
+.nav-item--subMenu.is-open>.subNavList {
+    display: block;
+}
+.nav-item--messages {
+    padding: 17px 0;
+}
+.nav-item--avatar {
+    padding: 14px 0;
+}
+.nav-item--avatar img {
+    vertical-align: middle;
+}
+.subNavList {
+    -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.7);
+    z-index: 2;
+    position: absolute;
+    top: 60px;
+    right: -10px;
+    left: auto;
+    display: none;
+    background: #fff;
+}
+.subNavList:before {
+    bottom: 100%;
+    right: 8px;
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 8px solid transparent;
+    border-bottom-color: #fff;
+}
+.subNavList--left {
+    right: -30px;
+}
+@media (min-width: 992px) {
+    .subNavList--left {
+    right: -10px;
+}
+}.subNavList--left:before {
+    right: 28px;
+}
+@media (min-width: 992px) {
+    .subNavList--left: before {
+    right: 8px;
+}
+}.subNavList-item--divider {
+    height: 1px;
+    background: #e6e6e6;
+    margin: 5px;
+}
+.subNavList-link {
+    color: #231f20;
+    display: block;
+    padding: 5px 15px;
+    white-space: nowrap;
+    line-height: 32px;
+    text-decoration: none;
+    text-align: left;
+    position: relative;
+    min-width: 100px;
+    font-size: 13px;
+}
+.subNavList-link:hover {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    background-color: #e6e6e6;
+    text-decoration: none;
+}
+.subNavList-link--referral {
+    color: #59d389;
+}
+
+@media (-webkit-min-device-pixel-ratio:1.5), (min--moz-device-pixel-ratio:1.5), (min-resolution:1.5dppx) {
+    .photographyBenefitsIcon--diamond {
+    background-image: url(https://d1kal2uthwls49.cloudfront.net/cms-content/img/owner_tools/photography/benefit-diamond@2x.png);
+}
+}.insuranceProviderIcon-title {
+    margin: 30px 0;
+}
+.insuranceProviderIcon-superTitle {
+    margin: 40px 10px;
+}
+.insuranceProviderIcon--libertyMutual {
+    display: block;
+    width: 154px;
+    height: 40px;
+    background: url(https://d1kal2uthwls49.cloudfront.net/cms-content/img/insurance_provider/logo_libertyMutual.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 0 0;
+    display: inline-block;
+}
+@media (-webkit-min-device-pixel-ratio:1.5), (min--moz-device-pixel-ratio:1.5), (min-resolution:1.5dppx) {
+    .insuranceProviderIcon--libertyMutual {
+    background-image: url(https://d1kal2uthwls49.cloudfront.net/cms-content/img/insurance_provider/logo_libertyMutual@2x.png);
+}
+}.insuranceProviderIcon--intactRed {
+    display: block;
+    width: 68px;
+    height: 30px;
+    background: url(https://d1kal2uthwls49.cloudfront.net/cms-content/img/insurance_provider/logo_intact_red.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 0 0;
+    display: inline-block;
+}
+@media (-webkit-min-device-pixel-ratio:1.5), (min--moz-device-pixel-ratio:1.5), (min-resolution:1.5dppx) {
+    .insuranceProviderIcon--intactRed {
+    background-image: url(https://d1kal2uthwls49.cloudfront.net/cms-content/img/insurance_provider/logo_intact_red@2x.png);
+}
+}.insuranceProviderIcon--belairdirectRed {
+    display: block;
+    width: 105px;
+    height: 25px;
+    background: url(https://d1kal2uthwls49.cloudfront.net/cms-content/img/insurance_provider/logo_belairdirect_red.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 0 0;
+    display: inline-block;
+    margin-top: 7px;
+}
+@media (-webkit-min-device-pixel-ratio:1.5), (min--moz-device-pixel-ratio:1.5), (min-resolution:1.5dppx) {
+    .insuranceProviderIcon--belairdirectRed {
+    background-image: url(https://d1kal2uthwls49.cloudfront.net/cms-content/img/insurance_provider/logo_belairdirect_red@2x.png);
+}
+}.insuranceProviderIcon--intactTransparent {
+    display: block;
+    width: 109px;
+    height: 49px;
+    background: url(https://d1kal2uthwls49.cloudfront.net/cms-content/img/insurance_provider/logo-intact.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 0 0;
+    display: inline-block;
+    position: relative;
+    top: 16px;
+}
+@media (-webkit-min-device-pixel-ratio:1.5), (min--moz-device-pixel-ratio:1.5), (min-resolution:1.5dppx) {
+    .insuranceProviderIcon--intactTransparent {
+    background-image: url(https://d1kal2uthwls49.cloudfront.net/cms-content/img/insurance_provider/logo-intact@2x.png);
+}
+}.insuranceProviderIcon--belairdirectTransparent {
+    display: block;
+    width: 179.5px;
+    height: 23.6px;
+    background: url(https://d1kal2uthwls49.cloudfront.net/cms-content/img/insurance_provider/logo-belairdirect.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 0 0;
+    display: inline-block;
+    position: relative;
+    top: 6px;
+}
+@media (-webkit-min-device-pixel-ratio:1.5), (min--moz-device-pixel-ratio:1.5), (min-resolution:1.5dppx) {
+    .insuranceProviderIcon--belairdirectTransparent {
+    background-image: url(https://d1kal2uthwls49.cloudfront.net/cms-content/img/insurance_provider/logo-belairdirect@2x.png);
+}
+}.insuranceProviderIcon--allianz {
+    display: block;
+    width: 110px;
+    height: 28px;
+    background: url(https://d1kal2uthwls49.cloudfront.net/cms-content/img/insurance_provider/logo_allianz.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 0 0;
+    display: inline-block;
+}
+@media (-webkit-min-device-pixel-ratio:1.5), (min--moz-device-pixel-ratio:1.5), (min-resolution:1.5dppx) {
+    .insuranceProviderIcon--allianz {
+    background-image: url(https://d1kal2uthwls49.cloudfront.net/cms-content/img/insurance_provider/logo_allianz@2x.jpg);
+}
+.searchBar {
+    position: relative;
+}
+.searchBar-datePicker {
+    z-index: 4;
+}
+@media (max-width: 992px) {
+    .searchBar-datePicker {
+    position: fixed;
+    width: 100%}
+}.searchBar-options {
+    position: fixed;
+    width: 100%;
+    z-index: 3;
+}
+@media (min-width: 992px) {
+    .searchBar-options {
+    position: relative;
+}
+}.searchBar-locationError {
+    display: flex;
+    padding: 5px;
+    background-color: #2e2a2b;
+    color: #fff;
+    font-size: 12px;
+    align-items: center;
+}
+@media (min-width: 992px) {
+    .searchBar-locationError {
+    display: none;
+}
+}.searchBar-locationError.u-hidden {
+    display: none;
+}
+.searchBar--darkBackground {
+    background: #231f20;
+    color: #fff;
+}
+.searchBar-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 28px;
+    background: transparent;
+}
+.searchBar-icon {
+    background: url('/resources/img/turo-sprite.v10.png') no-repeat -240px 0;
+    background-size: 300px;
+    width: 28px;
+    height: 28px;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 20px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5),  (min--moz-device-pixel-ratio: 1.5),  (min-resolution: 1.5dppx) {
+    .searchBar-icon {
+    background-image: url('/resources/img/turo-sprite.v10@2x.png');
+}
+}.searchBar-button {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    width: 100%;
+    height: 100%;
+    border: none;
+    cursor: pointer;
+}
+input.searchBar-input {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    height: 30px;
+    background: transparent;
+    color: #fff;
+    font-size: 15px;
+    padding-left: 21px;
+}
+input.searchBar-input:focus {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+}
+.searchBar-input.is-error {
+    border-bottom: 1px solid #df4a32;
+}
+@media screen and(max-width:425){
+.ui-datepicker{
+
+    width:90%;
+    }
+}

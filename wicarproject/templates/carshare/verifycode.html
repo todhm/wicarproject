@@ -1,0 +1,25 @@
+{% extends "base_temp.html"%}
+{% block content %}
+
+<div id="pageContainer-content" class="u-contentTopPadding  u-contentBottomPadding">
+    <div id="dialog-frame-container" class="container">
+        <div id="dialog-frame" class="dialog-container">
+            <div id="add-mobile-phone" class="auth-dialog-content">
+                <h4>인증번호 입력하기</h4>
+                <p>문자메시지를 통해 전송된 번호를 입력해주세요. </p>
+                {% from "_formhelpers.html" import render_field %}
+                <form id="add-mobile-phone-form" action="{{ url_for('carshare_app.verify_code_page')}}"  method="post">
+                    {{ form.hidden_tag() }}
+                    <div class="input-container">
+                        {{render_field(form.code ,placeholder="0000", type="tel", autofocus="autofocus")}}
+                    </div>
+                    <button id="submit-add-mobile-form" type="submit" class="button button--green ">인증번호 입력하기</button>
+                    <button  type="submit" name="submit" value="resend" class="button">인증번호 재전송</button>
+                </form>
+                {% include '_flashmessages.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

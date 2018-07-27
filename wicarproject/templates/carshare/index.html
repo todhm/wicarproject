@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+{% block style%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/carshare/index.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css/carshare/index_detail.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css/carshare/main.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='css/carshare/player.css')}}">
+
+{% endblock %}
+{% block content%}
+<header class="header container container--fluid container--darkBackground js-header ">
+<a href="https://turo.com/" class="header-logo"></a>
+
+<div class="header-searchBar searchBar u-pullLeft u-hideSmallScreen">
+    <form class="js-searchBarForm" action="https://turo.com/search" method="get" autocomplete="off">
+        <span class="searchBar-icon">
+            <button class="searchBar-button" type="submit"></button>
+        </span>
+
+        <input id="search-input-header" class="searchBar-input js-searchBarInput u-truncate ui-autocomplete-input" title="Search" type="text" name="location" value="" placeholder="Enter city, airport, or address" autocomplete="off"><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+        <input type="hidden" class="js-searchLocationCountry" name="country">
+        <input type="hidden" class="js-searchLocationRegion" name="region">
+        <input type="hidden" class="js-searchLocationType" name="locationType">
+        <div id="places"></div>
+    </form>
+</div>
+
+<div class="js-searchAppliedFilters header-searchFilters"></div>
+
+<ul class="header-rightNav nav ">
+
+
+            <li class="headerRightNav-host nav-item nav-item--subMenu js-navSubMenu">
+
+                <span class="nav-itemText js-navSubMenuToggle">
+                    <span>Host</span>
+                    <span class="nav-itemIcon nav-itemIcon--arrow"></span>
+                </span>
+
+                <ul class="subNavList">
+                    <li class="subNavList-item">
+                        <a class="subNavList-link" href="https://turo.com/host/vehicles">Vehicles</a>
+                    </li>
+                    <li class="subNavList-item">
+                        <a class="subNavList-link" href="https://turo.com/host/performance">Performance</a>
+                    </li>
+                    <li class="subNavList-item">
+                        <a class="subNavList-link" href="https://turo.com/host/reviews">Reviews</a>
+                    </li>
+                    <li class="subNavList-item">
+                        <a class="subNavList-link" href="https://turo.com/host/earnings">Earnings</a>
+                    </li>
+                    <li class="subNavList-item">
+                        <a class="subNavList-link" href="https://turo.com/host/settings">Settings</a>
+                    </li>
+                    <li class="subNavList-item subNavList-item--divider"></li>
+                    <li class="subNavList-item">
+                        <a class="subNavList-link" href="https://turo.com/owner-tools">Owner tools</a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+
+
+        <li class="headerRightNav-dashboard nav-item u-hideTinyScreen">
+
+            <a class="nav-itemText nav-itemText--link" href="https://turo.com/dashboard">
+                Dashboard
+            </a>
+        </li>
+
+
+
+
+    <li class="headerRightNav-learnMore nav-item nav-item--subMenu js-navSubMenu nav-item--left u-hideTinyScreen">
+                <span class="nav-itemText js-navSubMenuToggle u-hideSmallScreen">
+                    <span>Learn more</span>
+                    <span class="nav-itemIcon nav-itemIcon--arrow"></span>
+                </span>
+                <span class="nav-itemText js-navSubMenuToggle u-smallScreenOnly">
+                    <span>Learn more</span>
+                    <span class="nav-itemIcon nav-itemIcon--arrow"></span>
+                </span>
+        <ul class="subNavList subNavList--left">
+            <li class="subNavList-item"><a class="subNavList-link" href="#">WiCar란?</a>
+            </li>
+            <li class="subNavList-item"><a class="subNavList-link" href="#">차빌리기</a>
+            </li>
+            <li class="subNavList-item"><a class="subNavList-link" href="https://turo.com/list-your-car">Make money from your car</a>
+            </li>
+            <li class="subNavList-item subNavList-item--divider"></li>
+            <li class="subNavList-item"><a class="subNavList-link" href="https://turo.com/business-travel">Turo for business</a>
+            </li>
+            <li class="subNavList-item"><a class="subNavList-link" href="https://turo.com/trust-and-safety">Trust &amp; safety</a>
+            </li>
+
+
+            <li class="subNavList-item"><a class="subNavList-link" href="https://support.turo.com/access/login?return_to=https%3A%2F%2Fsupport.turo.com%2F">Contact support</a>
+            </li>
+        </ul>
+    </li>
+
+
+
+
+            <li class="headerRightNav-messages nav-item nav-item--messages">
+                <a class="nav-itemIcon nav-itemIcon--messages" href="https://turo.com/messages">
+                </a>
+            </li>
+            <li class="headerRightNav-account nav-item nav-item--subMenu nav-item--avatar js-navSubMenu">
+                <div class="js-navSubMenuToggle">
+                        <img class="profilePhoto profilePhoto--small profilePhoto--round" src="./turoweb_files/ECk0u3H4Q9SZnGfg2C99LQ.32x32.jpg" alt="">
+                    <span class="nav-itemIcon nav-itemIcon--arrow"></span>
+                </div>
+                <ul class="subNavList">
+                    <li class="subNavList-item subNavList-item--search">
+                        <a class="subNavList-link" href="#">
+                            Find a car
+                        </a>
+                    </li>
+                    <li class="subNavList-item u-tinyScreenOnly">
+                        <a class="subNavList-link" href="#">
+                            Dashboard
+
+                        </a>
+                    </li>
+
+                    <li class="subNavList-item subNavList-item--divider"></li>
+                    <li class="subNavList-item"><a class="subNavList-link" href="#">Account</a>
+                    </li>
+
+                        <li class="subNavList-item"><a class="subNavList-link" href="#">Earnings</a>
+                        </li>
+
+                    <li class="subNavList-item">
+                        <a class="subNavList-link" href="#">Profile</a>
+                    </li>
+                    <li class="subNavList-item"><a class="subNavList-link" href="#">Trip history</a>
+                    </li>
+                    <li class="subNavList-item"><a class="subNavList-link subNavList-link--referral" href="#">Get $25 credit</a>
+                    </li>
+
+                    <li class="subNavList-item subNavList-item--divider"></li>
+                    <li class="subNavList-item"><a class="subNavList-link" href="#" target="_blank">Contact support</a>
+                    </li>
+                    <li class="subNavList-item"><a class="js-logoutLink subNavList-link" href="#">Log out</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+</header>
+
+
+<!--HERO-->
+
+
+    <div id="pageContainer-content" class=" ">
+
+<!--BEGIN_CONTENT-->
+
+<div id="home" class="u-hidden" data-driver-id="930925"></div>
+
+<div class="container container--fluid container--darkBackground interstitial interstitial--homeHero interstitial--heroCurvedRoad">
+<div class="container u-alignCenter">
+    <h1 class="interstitial-heading">Rent better cars</h1>
+    <h6 class="interstitial-subtitle">Choose from thousands of unique cars for rent by local hosts</h6>
+    <!-- Referred by _search_form_expanded_js -->
+    <form action="https://turo.com/search" autocomplete="off" class="searchFormExpanded" id="js-searchFormExpanded" data-filter-by-business-class="" data-track-event="method=&quot;get&quot;">
+        <div class="searchFormExpanded-elementContainer searchFormExpanded-elementContainer--location" id="js-searchFormExpandedLocationInputContainer">
+            <label class="searchFormExpanded-label">Where</label>
+            <input autocomplete="off" class="searchFormExpanded-locationInput u-darkerPlaceholder u-truncate ui-autocomplete-input" id="js-searchFormExpandedLocationInput" name="location" placeholder="Enter city, airport, or address" size="23" type="text"><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+            <!-- Values modified by autocomplete callback -->
+            <input type="hidden" class="js-searchFormExpandedLocationCountry" name="country">
+            <input type="hidden" class="js-searchFormExpandedLocationRegion" name="region">
+            <input type="hidden" class="js-searchFormExpandedLocationType" name="locationType">
+            <div id="places"></div>
+        </div>
+        <div class="searchFormExpanded-elementContainer">
+            <label class="searchFormExpanded-label" for="js-searchFormExpandedStartDate">From</label>
+            <div class="searchFormExpanded-dateTimeContainer">
+                <div class="searchFormExpanded-dateTimeItem">
+                    <input class="searchFormExpanded-date dateTimePicker-date"  id="js-searchFormExpandedStartDate" name="startDate" onfocus="this.blur()" placeholder="Any day" readonly="true" size="10" type="text">
+                </div>
+                <div class="searchFormExpanded-dateTimeItem">
+                    <span class="searchFormExpanded-time styled-select-container">
+                        <select class="searchFormExpanded-timeSelect" name="startTime" id="js-searchFormExpandedStartTime">
+                <option value="01:00">1:00 오전</option><option value="01:30">1:30 오전</option><option value="02:00">2:00 오전</option><option value="02:30">2:30 오전</option><option value="03:00">3:00 오전</option><option value="03:30">3:30 오전</option><option value="04:00">4:00 오전</option><option value="04:30">4:30 오전</option><option value="05:00">5:00 오전</option><option value="05:30">5:30 오전</option><option value="06:00">6:00 오전</option><option value="06:30">6:30 오전</option><option value="07:00">7:00 오전</option><option value="07:30">7:30 오전</option><option value="08:00">8:00 오전</option><option value="08:30">8:30 오전</option><option value="09:00">9:00 오전</option><option value="09:30">9:30 오전</option><option value="10:00">10:00 오전</option><option value="10:30">10:30 오전</option><option value="11:00">11:00 오전</option><option value="11:30">11:30 오전</option><option value="12:00">noon</option><option value="12:30">12:30 오후</option><option value="13:00">1:00 오후</option><option value="13:30">1:30 오후</option><option value="14:00">2:00 오후</option><option value="14:30">2:30 오후</option><option value="15:00">3:00 오후</option><option value="15:30">3:30 오후</option><option value="16:00">4:00 오후</option><option value="16:30">4:30 오후</option><option value="17:00">5:00 오후</option><option value="17:30">5:30 오후</option><option value="18:00">6:00 오후</option><option value="18:30">6:30 오후</option><option value="19:00">7:00 오후</option><option value="19:30">7:30 오후</option><option value="20:00">8:00 오후</option><option value="20:30">8:30 오후</option><option value="21:00">9:00 오후</option><option value="21:30">9:30 오후</option><option value="22:00">10:00 오후</option><option value="22:30">10:30 오후</option><option value="23:00">11:00 오후</option><option value="23:30">11:30 오후</option></select>
+                        <span class="searchFormExpanded-timeText text">10:00 오전</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="searchFormExpanded-elementContainer">
+            <label class="searchFormExpanded-label" for="js-searchFormExpandedEndDate">Until</label>
+            <div class="searchFormExpanded-dateTimeContainer">
+                <div class="searchFormExpanded-dateTimeItem">
+                    <input class="searchFormExpanded-date dateTimePicker-date" id="js-searchFormExpandedEndDate" name="endDate" onfocus="this.blur()" placeholder="Any day" readonly="true" size="10" type="text">
+                </div>
+                <div class="searchFormExpanded-dateTimeItem">
+                    <span class="searchFormExpanded-time styled-select-container">
+                        <select class="searchFormExpanded-timeSelect" name="endTime" id="js-searchFormExpandedEndTime">
+                <option value="00:00">midnight</option><option value="00:30">12:30 오전</option><option value="01:00">1:00 오전</option><option value="01:30">1:30 오전</option><option value="02:00">2:00 오전</option><option value="02:30">2:30 오전</option><option value="03:00">3:00 오전</option><option value="03:30">3:30 오전</option><option value="04:00">4:00 오전</option><option value="04:30">4:30 오전</option><option value="05:00">5:00 오전</option><option value="05:30">5:30 오전</option><option value="06:00">6:00 오전</option><option value="06:30">6:30 오전</option><option value="07:00">7:00 오전</option><option value="07:30">7:30 오전</option><option value="08:00">8:00 오전</option><option value="08:30">8:30 오전</option><option value="09:00">9:00 오전</option><option value="09:30">9:30 오전</option><option value="10:00">10:00 오전</option><option value="10:30">10:30 오전</option><option value="11:00">11:00 오전</option><option value="11:30">11:30 오전</option><option value="12:00">noon</option><option value="12:30">12:30 오후</option><option value="13:00">1:00 오후</option><option value="13:30">1:30 오후</option><option value="14:00">2:00 오후</option><option value="14:30">2:30 오후</option><option value="15:00">3:00 오후</option><option value="15:30">3:30 오후</option><option value="16:00">4:00 오후</option><option value="16:30">4:30 오후</option><option value="17:00">5:00 오후</option><option value="17:30">5:30 오후</option><option value="18:00">6:00 오후</option><option value="18:30">6:30 오후</option><option value="19:00">7:00 오후</option><option value="19:30">7:30 오후</option><option value="20:00">8:00 오후</option><option value="20:30">8:30 오후</option><option value="21:00">9:00 오후</option><option value="21:30">9:30 오후</option><option value="22:00">10:00 오후</option><option value="22:30">10:30 오후</option><option value="23:00">11:00 오후</option><option value="23:30">11:30 오후</option></select>
+                        <span class="searchFormExpanded-timeText text">10:00 오전</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="button button--green searchFormExpanded-button u-tinyScreenOnly">Search</button>
+        <button type="submit" class="button button--green searchFormExpanded-button searchFormExpanded-button--round u-hideTinyScreen"></button>
+        </form>
+    </div>
+</div>
+<div class="row index_header">
+    <div class="col-sm-offset-1 col-md-offset-3 col-lg-offset-2 col-sm-10 col-md-6 col-lg-8">
+        <h1 class="interstitial-heading">Wicar</h1>
+        <h6 class="interstitial-subtitle">특별한 경험을 선물해 드립니다.</h6>
+        <form class="indexform">
+            <div class="form-group">
+                <label >장소</label>
+                <input id="where" class="form-control inputheader" type="text">
+                <hr class="indexhr">
+                <label >대여시작일</label>
+                <input id="from" class="form-control inputheader" type="text">
+                <hr class="indexhr">
+                <label >대여마감일</label>
+                <input id="until" class="form-control inputheader" type="text">
+                <hr class="indexhr">
+                <input class="form-control inputheader btn-success" type="submit" value="검색하기">
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row index_header">
+    <h1 class="interstitial-heading">Rent better cars</h1>
+    <h6 class="interstitial-subtitle">Choose from thousands of unique cars for rent by local hosts</h6>
+    <!-- Referred by _search_form_expanded_js -->
+    <form action="https://turo.com/search" autocomplete="off" class="searchFormExpanded" id="js-searchFormExpanded" data-filter-by-business-class="" data-track-event="method=&quot;get&quot;">
+        <div class="searchFormExpanded-elementContainer searchFormExpanded-elementContainer--location" id="js-searchFormExpandedLocationInputContainer">
+            <label class="searchFormExpanded-label">Where</label>
+            <input autocomplete="off" class="searchFormExpanded-locationInput u-darkerPlaceholder u-truncate ui-autocomplete-input" id="js-searchFormExpandedLocationInput" name="location" placeholder="Enter city, airport, or address" size="23" type="text"><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+            <div id="places"></div>
+        </div>
+        <div class="searchFormExpanded-elementContainer">
+            <label class="searchFormExpanded-label" for="js-searchFormExpandedStartDate">대여시작일</label>
+            <div class="searchFormExpanded-dateTimeContainer">
+                <div class="searchFormExpanded-dateTimeItem">
+                    <input class="searchFormExpanded-date dateTimePicker-date" id="from">
+                </div>
+                <div class="searchFormExpanded-dateTimeItem">
+                    <span class="searchFormExpanded-time styled-select-container">
+                        <select class="searchFormExpanded-timeSelect" name="startTime" id="js-searchFormExpandedStartTime">
+                <option value="01:00">1:00 오전</option><option value="01:30">1:30 오전</option><option value="02:00">2:00 오전</option><option value="02:30">2:30 오전</option><option value="03:00">3:00 오전</option><option value="03:30">3:30 오전</option><option value="04:00">4:00 오전</option><option value="04:30">4:30 오전</option><option value="05:00">5:00 오전</option><option value="05:30">5:30 오전</option><option value="06:00">6:00 오전</option><option value="06:30">6:30 오전</option><option value="07:00">7:00 오전</option><option value="07:30">7:30 오전</option><option value="08:00">8:00 오전</option><option value="08:30">8:30 오전</option><option value="09:00">9:00 오전</option><option value="09:30">9:30 오전</option><option value="10:00">10:00 오전</option><option value="10:30">10:30 오전</option><option value="11:00">11:00 오전</option><option value="11:30">11:30 오전</option><option value="12:00">noon</option><option value="12:30">12:30 오후</option><option value="13:00">1:00 오후</option><option value="13:30">1:30 오후</option><option value="14:00">2:00 오후</option><option value="14:30">2:30 오후</option><option value="15:00">3:00 오후</option><option value="15:30">3:30 오후</option><option value="16:00">4:00 오후</option><option value="16:30">4:30 오후</option><option value="17:00">5:00 오후</option><option value="17:30">5:30 오후</option><option value="18:00">6:00 오후</option><option value="18:30">6:30 오후</option><option value="19:00">7:00 오후</option><option value="19:30">7:30 오후</option><option value="20:00">8:00 오후</option><option value="20:30">8:30 오후</option><option value="21:00">9:00 오후</option><option value="21:30">9:30 오후</option><option value="22:00">10:00 오후</option><option value="22:30">10:30 오후</option><option value="23:00">11:00 오후</option><option value="23:30">11:30 오후</option></select>
+                        <span class="searchFormExpanded-timeText text">10:00 오전</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="searchFormExpanded-elementContainer">
+            <label class="searchFormExpanded-label" for="js-searchFormExpandedEndDate">대여종료일</label>
+            <div class="searchFormExpanded-dateTimeContainer">
+                <div class="searchFormExpanded-dateTimeItem">
+                    <input class="searchFormExpanded-date dateTimePicker-date" id="until" >
+                </div>
+                <div class="searchFormExpanded-dateTimeItem">
+                    <span class="searchFormExpanded-time styled-select-container">
+                        <select class="searchFormExpanded-timeSelect" name="endTime" id="js-searchFormExpandedEndTime">
+                <option value="00:00">midnight</option>
+                <option value="00:30">12:30 오전</option>
+                <option value="01:00">1:00 오전</option>
+                <option value="01:30">1:30 오전</option>
+                <option value="02:00">2:00 오전</option><option value="02:30">2:30 오전</option><option value="03:00">3:00 오전</option><option value="03:30">3:30 오전</option><option value="04:00">4:00 오전</option><option value="04:30">4:30 오전</option><option value="05:00">5:00 오전</option><option value="05:30">5:30 오전</option><option value="06:00">6:00 오전</option><option value="06:30">6:30 오전</option><option value="07:00">7:00 오전</option><option value="07:30">7:30 오전</option><option value="08:00">8:00 오전</option><option value="08:30">8:30 오전</option><option value="09:00">9:00 오전</option><option value="09:30">9:30 오전</option><option value="10:00">10:00 오전</option><option value="10:30">10:30 오전</option><option value="11:00">11:00 오전</option><option value="11:30">11:30 오전</option><option value="12:00">noon</option><option value="12:30">12:30 오후</option><option value="13:00">1:00 오후</option><option value="13:30">1:30 오후</option><option value="14:00">2:00 오후</option><option value="14:30">2:30 오후</option><option value="15:00">3:00 오후</option><option value="15:30">3:30 오후</option><option value="16:00">4:00 오후</option><option value="16:30">4:30 오후</option><option value="17:00">5:00 오후</option><option value="17:30">5:30 오후</option><option value="18:00">6:00 오후</option><option value="18:30">6:30 오후</option><option value="19:00">7:00 오후</option><option value="19:30">7:30 오후</option><option value="20:00">8:00 오후</option><option value="20:30">8:30 오후</option><option value="21:00">9:00 오후</option><option value="21:30">9:30 오후</option><option value="22:00">10:00 오후</option><option value="22:30">10:30 오후</option><option value="23:00">11:00 오후</option><option value="23:30">11:30 오후</option></select>
+                        <span class="searchFormExpanded-timeText text">10:00 오전</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="button button--green searchFormExpanded-button u-tinyScreenOnly">Search</button>
+        <button type="submit" class="button button--green searchFormExpanded-button searchFormExpanded-button--round u-hideTinyScreen"></button>
+        </form>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`When not authenticated SelectField renders a snapshot properly 1`] = `
+<div
+  className="grid-item grid-item--3"
+>
+  <label
+    htmlFor="js-makesInput"
+  />
+  <span
+    className="styled-select-container styled-select-container--fluid"
+  >
+    <select
+      className="required"
+      id="js-makesInput"
+      name={undefined}
+      onChange={[Function]}
+      value={undefined}
+    >
+      <option
+        value=""
+      />
+      <option
+        value="Jordan"
+      >
+        Jordan
+      </option>
+      <option
+        value="Jordan2"
+      >
+        Jordan2
+      </option>
+    </select>
+    <span
+      className="text"
+    />
+    <span
+      className="errorMessage-text js-locationErrorText"
+    />
+  </span>
+</div>
+`;

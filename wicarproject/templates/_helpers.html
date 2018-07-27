@@ -1,0 +1,99 @@
+{% macro render_btn(page) %}
+    <div class="interstitial-bottom interstitial-bottom--largerMargin">
+        <ul class="horizontalMenu">
+            {% if page == "renter"%}
+                <li class="horizontalMenu-item is-selected">
+                    <a href="{{url_for('carshare_app.renting_page')}}">차를 빌릴래요</a>
+                {% else %}
+                    <li class="horizontalMenu-item">
+                        <a class="horizontalMenu-link" href="{{url_for('carshare_app.renting_page')}}">차를 빌릴래요</a>
+                    {% endif %}
+                </li>
+                {% if page == "owner"%}
+                    <li class="horizontalMenu-item is-selected">
+                        <a href="{{url_for('carshare_app.sharing_page')}}">차를 빌려줄래요</a>
+                    {% else %}
+                        <li class="horizontalMenu-item">
+                            <a class="horizontalMenu-link" href="{{url_for('carshare_app.sharing_page')}}">차를 빌려줄래요</a>
+                        {% endif %}
+                    </li>
+                    {% if page == "explain"%}
+                        <li class="horizontalMenu-item is-selected">
+                            <a href="{{url_for('carshare_app.explanation_page')}}">Wi-CAR는 어떻게 이용하나요?</a>
+                        {% else %}
+                            <li class="horizontalMenu-item">
+                                <a class="horizontalMenu-link" href="{{url_for('carshare_app.explanation_page')}}">Wi-CAR는 어떻게 이용하나요?</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            {% endmacro %}
+
+            {% macro render_ins()%}
+                <div class="container insuranceProvider insuranceProvider--noGrid">
+                    <div class="insuranceProvider-logos">
+                        <a href="#">
+                            <span class="insuranceProviderIcon--libertyMutual"></span>
+                        </a>
+                    </div>
+                </div>
+            {% endmacro %}
+
+            {% macro render_dashboard_header(activeLink)%}
+                <div class="pageContainer pageContainer--fluid">
+                    <div class="pageContainer u-backgroundColorBlackLight u-boxShadow pageContainer--fluid">
+                        <div class="pageContainer navbar">
+                            <div class="navbar-links">
+
+                                {% if activeLink =="get_car_list"%}
+                                    <a class="navbarLink navbarLink--active" href="{{url_for('carupload_app.get_car_list')}}">차고</a>
+                                {% else %}
+                                    <a class="navbarLink" href="{{url_for('carupload_app.get_car_list')}}">차고</a>
+                                {% endif %}
+                                {% if activeLink =="notifications"%}
+                                    <a class="navbarLink navbarLink--active" aria-current="true" href="{{url_for('carbooking_app.get_notifications')}}">알림</a>
+                                {% else %}
+                                    <a class="navbarLink" aria-current="false" href="{{url_for('carbooking_app.get_notifications')}}">알림</a>
+                                {% endif %}
+                                {% if activeLink =="owner_review"%}
+                                    <a class="navbarLink navbarLink--active" aria-current="false" href="{{url_for('carbooking_app.get_my_owner_review')}}">리뷰</a>
+                                {% else %}
+                                    <a class="navbarLink" aria-current="false" href="{{url_for('carbooking_app.get_my_owner_review')}}">리뷰</a>
+                                {% endif %}
+                                <a class="navbarLink" aria-current="false" href="{{url_for('carshare_app.earning_history')}}">수익</a>
+                                {% if activeLink =="car_owner_setting"%}
+                                    <a class="navbarLink navbarLink--active" aria-current="false" href="{{url_for('carbooking_app.car_owner_setting')}}">설정</a>
+                                {% else %}
+                                    <a class="navbarLink" aria-current="false" href="{{url_for('carbooking_app.car_owner_setting')}}">설정</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endmacro %}
+
+            {% macro render_account_data(label,modal_id,name,value,flash_filter)%}
+                <div class="layoutSingleColumn">
+                    <hr/>
+                    <div class="section section--withSmallMargin">
+                        <div class="subheader">{{label}}</div>
+                        <div class="media media--center paymentMethodInfo">
+                            <span class="media-item payment-creditCardIcon payment-creditCardIcon--single payment-creditCardIcon--visa"></span>
+                            <div class="media-body paymentMethodInfo-textContainer">
+                                <div class="text--small">{{name}}
+                                    {{value}}••••••••</div>
+                                <button class="paymentMethodInfo-button button button--link button--smaller" href="{{modal_id}}" data-toggle="modal">{{label}}변경</button>
+                            </div>
+                        </div>
+                        <div class="paymentForm-row form-line">
+                            <div class="grid-item">
+                                {% with messages = get_flashed_messages(category_filter = [flash_filter]) %}
+                                {% if messages %}
+                                    <span class="errorMessage-text js-locationErrorText">{{messages[0]}}</span>
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endmacro %}

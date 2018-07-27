@@ -1,0 +1,96 @@
+{% extends "base_temp.html"%}
+{% block style%}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/carupload/styles.a92b76dabd05f7aaec98dfd845b162fe.css')}}">
+    <style>
+        .deactivate-vehicle {
+            color: black;
+        }
+    </style>
+{% endblock %}
+{% block content%}
+
+    <div id="pageContainer-content">
+        <div>
+            {% from "_helpers.html" import render_dashboard_header %}
+            {{render_dashboard_header('get_car_list')}}
+        </div>
+
+        <div class="pageContainer">
+            <div aria-busy="false">
+                <div class="pageContainer vehiclesWrapper">
+                    <div class="vehiclesWrapper-info">
+                        <div>
+                            <h1 class="vehiclesWrapper-header">차량목록</h1>
+                            <p class="vehiclesWrapper-vehicleCount">차량목록 ({{car_list|length}})</p>
+                        </div>
+                        <a class="button button--purple vehiclesWrapper-button" href="{{url_for('carupload_app.register_car')}}">차량 등록하기</a>
+                    </div>
+
+                    <div class="vehiclesWrapper-vehicles row gutter--4">
+
+                        {% for car in car_list %}
+                            <div class="col col--12 col--lg6">
+                                <div class="media vehiclesWrapper-vehicle">
+                                    {%if car.active ==0 %}
+                                        <a class="media-item vehicleDetailsCard-imageContainer" href="{{url_for('carupload_app.register_car',car_id=car.id)}}">
+                                            {% if car.imgsrc %}
+                                                <img alt="{{car.class_name}}" class="vehicleImage vehicleImage--large vehicleDetailsCard-image" src="{{car.imgsrc}}">
+                                            {% else %}
+                                                <img alt="{{car.class_name}}" class="vehicleImage vehicleImage--large vehicleDetailsCard-image" src="#">
+                                            {% endif %}
+                                            <span class="colorStatusBanner vehicleDetailsCard-imageBanner">
+                                                <i class="colorStatusBanner-circle colorStatusBanner-circle--red"></i>
+                                                <span class="colorStatusBanner-text">미등록 차량</span>
+                                            </span>
+                                        </a>
+                                        {%else%}
+                                        <a class="media-item vehicleDetailsCard-imageContainer" href="{{url_for('carupload_app.car_price_setting',car_id=car.id)}}">
+                                            {% if car.imgsrc %}
+                                                <img alt="Hyundai Santa Fe" class="vehicleImage vehicleImage--large vehicleDetailsCard-image" src="{{car.imgsrc}}">
+                                            {% else %}
+                                                <img alt="Hyundai Santa Fe" class="vehicleImage vehicleImage--large vehicleDetailsCard-image" src="#">
+                                            {% endif %}
+                                        </a>
+                                    {% endif %}
+                                    <div class="media-body vehicleDetailsCard-bodyContainer">
+                                        <div class="vehicleLabel vehicleLabel--small">
+                                            <div class="vehicleLabel-makeModelYearContainer">
+                                                <div class="vehicleLabel-makeModelContainer">
+                                                    {% if car.brand and car.class_name%}
+                                                        <p class="vehicleLabel-makeModel">{{car.brand+" "+car.class_name}}</p>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="vehicleLabel-year">{{car.year}}</div>
+                                            </div>
+                                        </div>
+                                        {% if car.caroption.plate_num %}
+                                            <div class="vehicleLabel--small">
+                                                <p class="vehicleLabel-year">{{car.caroption.plate_num}}</p>
+                                            </div>
+                                        {% endif %}
+                                        {% if car.active == 0 %}
+                                            <div>
+                                                <a class="vehicleDetailsCard-link" href="{{url_for('carupload_app.register_car',car_id=car.id)}}">등록하기</a>
+                                            </div>
+                                        {% else %}
+                                            <div>
+                                                <a class="vehicleDetailsCard-link" href="{{url_for('carupload_app.car_price_setting',car_id=car.id)}}">수정하기</a>
+                                                <a class="vehicleDetailsCard-link deactivate-vehicle" href="{{url_for('carupload_app.deactivate_car',car_id=car.id)}}">비활성화</a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}{% endblock %}

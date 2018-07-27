@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"carData.carBrand"},{"v":2,"key":{"codeName":1},"name":"codeName_1","ns":"carData.carBrand","background":false}]}

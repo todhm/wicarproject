@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{%block style%}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='wicar_search/build/static/css/main.fe9414c2.css')}}" >
+{% endblock %}
+{% block content%}
+<div id="pageContainer-content" class="u-contentTopPadding u-contentBottomPadding">
+    <div id="receipt-page" class="container">
+        <div id="receipt-page-content">
+            <div id="receipt-container">
+                <div class="receipt">
+                    <div class="reservation-info">
+                        <span>차주 지급내역</span>
+                        <span class="reservation-id">예약 ID {{owner_send.booking.id}}</span>
+                    </div>
+                    <div class="trip-details">
+                        <p class="details-bookedDateTime u-noMargin">예약일시 {{owner_send.booking.register_date.year}}년 {{owner_send.booking.register_date.month}}월 {{owner_send.booking.register_date.day}}일 {{owner_send.booking.register_date.hour}}:{{owner_send.booking.register_date.minute}}</p>
+                        <h5>
+                            {{owner_send.booking.car.brand}} {{owner_send.booking.car.class_name}}대여
+                        </h5>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="receiptSchedule">
+                                                <span class="label">대여시작일</span>
+                                                <p>{{owner_send.booking.start_time.strftime("%Y년 %m월 %d일")}}</p>
+                                                <p class="u-noMargin">{{owner_send.booking.start_time.strftime("%H:%M")}}</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="receiptSchedule">
+                                                <span class="label">대여종료일</span>
+                                                <p>{{owner_send.booking.start_time.strftime("%Y년 %m월 %d일")}}</p>
+                                                <p class="u-noMargin">{{owner_send.booking.start_time.strftime("%H:%M")}}</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="receiptLocation">
+                                                <span class="label">입금시간 </span>
+                                                <div class="receiptLocation-address">
+                                                    <p class="u-noMargin">{{owner_send.register_date.strftime("%Y년 %m월 %d일")}}</p>
+                                                    <p class="u-noMargin">{{owner_send.register_date.strftime("%H:%M")}}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="receiptLocation">
+                                                <span class="label">입금계좌인자내역</span>
+                                                <div class="receiptLocation-address">
+                                                    <p class="u-noMargin">{{owner_send.print_content}}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="receiptGuest">
+                                                <span class="label">여행자</span>
+                                                <p><a href="{{url_for('carshare_app.user_info', user_id=owner_send.booking.renter.id)}}">{{owner_send.booking.renter.name}}</a></p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="receiptDistance">
+                                                <span class="label">총 거리제한</span>
+                                                <p>{{owner_send.booking.total_distance}}km</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="receiptLocation">
+                                                <span class="label">출금기관</span>
+                                                <div class="receiptLocation-address">
+                                                    <p class="u-noMargin">{{owner_send.wd_bank_name}}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="receiptLocation">
+                                                <span class="label">송금인성명</span>
+                                                <div class="receiptLocation-address">
+                                                    <p class="u-noMargin">{{owner_send.wd_account_holder_name}}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="receiptLocation">
+                                                <span class="label">입금(개설)기관명 </span>
+                                                <div class="receiptLocation-address">
+                                                    <p class="u-noMargin">{{owner_send.bank_name}}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="receiptLocation">
+                                                <span class="label">입금계좌번호</span>
+                                                <div class="receiptLocation-address">
+                                                    <p class="u-noMargin">{{owner_send.account_num_masked}}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="receipt-divider"></div>
+                        <div class="payment-details">
+                            <div class="header">고객님의 수입</div>
+                            <ul>
+                                <!-- <li class="line-item ">
+                                    <span class="label ">Turo fees</span>
+                                    <span class="dots"></span>
+                                    <span class="value "><span class="currency negative">$8.00</span></span>
+                                </li>
+                                <li class="line-item-detail fee-description">
+                                    This fee helps us run the platform and provide services like 24/7 customer support to you
+                                </li> -->
+                                <li class="line-item ">
+                                    <span class="label ">송금금액</span>
+                                    <span class="dots"></span>
+                                    <span class="value earned total"><span class="currency positive">{{owner_send.tran_amt}}₩</span></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="receipt-divider"></div>
+                        <div class="receipt-footer">
+                            <p>Wi-CAR를 사용해주셔서 감사합니다</p>
+                            <span class="receipt-logo"></span>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock %}

@@ -1,0 +1,286 @@
+{% extends "base_temp.html" %}
+{% block style%}{% endblock %}
+
+{% block content%}
+    <!--BEGIN_CONTENT-->
+
+    <div id="home" class="u-hidden" data-driver-id="930925"></div>
+
+    <div class="container container--fluid container--darkBackground interstitial interstitial--homeHero interstitial--heroCurvedRoad">
+        <div class="container u-alignCenter">
+            <img id="index-middle-img" class="interstitial-heading" src="{{url_for('static',filename='images/wicar_blacklogo.png')}}"/>
+            <h4 class="interstitial-heading">Wi-CAR</h1>
+            <h6 class="interstitial-subtitle">특색있는 자동차를 와이카에서 경험하세요</h6>
+            <!-- Referred by _search_form_expanded_js -->
+            {% from "_formhelpers.html" import render_searchForm %}
+            {{render_searchForm(form)}}
+        </div>
+    </div>
+
+    <div class="container container--fluid" id="js-dealsCarousel">
+        <div class="subtitle flexCarousel-title">Wi-CAR 추천 딜</div>
+        <div id="index-carousel" class="js-carousel">
+            <div class="flexCarousel">
+                <div class="flexCarousel-content">
+                    <div class="js-carouselLeftArrow carouselNavigation-item carouselWithPeeks-item--arrow carouselWithPeeks-item--arrowLeft"></div>
+                    <div class="js-carouselLeftArrow flexCarousel-navContainerPrevious">
+                        <div class="flexCarousel-leftArrow">
+                            <span class="glyphicon glyphicon-chevron-left" style="font-size: 25px;"></span>
+                        </div>
+                    </div>
+                    <div class="flexCarousel-mask">
+                        <div class="flexCarousel-animation">
+                            <div class="flexCarousel-slides">
+                                <!-- content populated by js -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="js-carouselRightArrow flexCarousel-navContainerNext">
+                        <div class="flexCarousel-rightArrow">
+                            <span class="glyphicon glyphicon-chevron-right" style="font-size: 25px;"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container container--fluid renterPlacement insurance-container">
+        <div class="container u-alignCenter">
+            <h3 class="wicar-insurance-title">여러분에게 필요한 차는 Wi-CAR 에 있습니다</h3>
+            <div class="grid">
+                <div class="grid-item grid-item--5 grid-item--push1">
+                    <div class="renterPlacement-item">
+                        <div class="insurance-characteristic">
+                            경험
+                        </div>
+                        <h5 class="wicar-suggestion">
+                            당신이 경험 해보고 싶었던 차량
+                        </h5>
+                        <h6 class="wicar-greatness">내가 빌릴 자동차의 실제 사진을 보고 빌리세요!
+                        </h6>
+                    </div>
+                </div>
+                <div class="grid-item grid-item--5">
+                    <div class="renterPlacement-item">
+                        <div class="insurance-characteristic">
+                            편안
+                        </div>
+                        <h5 class="wicar-suggestion">
+                            당신의 편안한 여행
+                        </h5>
+                        <h6 class="wicar-greatness">Wi-CAR의 편리한 예약은 당신의 여행을 더욱 즐겁게 만들어드립니다.</h6>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a class="button button--large renterPlacement-button" href="{{url_for('carbooking_app.car_search')}}">
+                    랜트하러가기
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container container--fluid interstitial interstitial--wiggle ownerPlacement">
+        <div class="container u-alignCenter">
+            <h3 class="ownerPlacement-title">좀더 색다른 와이카 렌트</h3>
+            <div class="grid grid--noGutter">
+                <div class="grid-item grid-item--8 grid-item--push2">
+                    <p class="ownerPlacement-detail">Wi-CAR와 즐거운 여행을 해보세요
+                    </p>
+                </div>
+            </div>
+            <div class="buttonWrapper buttonWrapper--largestTopMargin ownerPlacement-button">
+                <a class="button button--large  btn_car_register" href="{{url_for('carshare_app.sharing_page')}}">자동차 등록하기</a>
+            </div>
+        </div>
+    </div>
+
+    <!--CONTENT-->
+
+    {% endblock%}
+
+    {% block script%}
+        <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+        <script type="text/javascript">
+            var queryUrl = {{url_for('carupload_api_app.return_address')|tojson}};
+            var start_date = {{start_date|tojson}};
+            var end_date = {{end_date|tojson}};
+        </script>
+        <script src="{{ url_for('static',filename='js/carbooking/searchform.js',version='1.66' )}}"></script>
+        <script>
+            $(function () {
+                function setCarsInFlexCarousel(carousel, cars, centeredSlideIndex) {
+                    //The carousel style depends on exactly 5 elements
+                    var itemsInCarousel = 5;
+                    var resultsLength = cars.length;
+                    for (var i = 0; i < itemsInCarousel; i++) {
+                        var resultsIndex = (centeredSlideIndex % resultsLength - 2 + resultsLength + i) % resultsLength;
+                        var slide = getCarouselSlideForCar(cars[resultsIndex], resultsIndex, carousel);
+                        $(carousel).find('.flexCarousel-slides').append(slide);
+                    }
+                }
+
+                function getCarouselSlideForCar(featuredVehicleResponse, resultIndex, carousel) {
+                    var imageUrl = featuredVehicleResponse.img.replace("{width}", "520").replace("{height}", "288");
+                    var imageHoverOverlay = $('<div>').addClass('image-container--overlay');
+                    var image = $('<div>').addClass('image-container').append($('<img>').attr('src', imageUrl)).append(imageHoverOverlay);
+
+                    if (featuredVehicleResponse.labels && featuredVehicleResponse.labels.length > 0) {
+                        var bannerHolder = $('<span>').addClass('vehicleWithDetails-bookingFeatures');
+                        bannerHolder.append($('<span>').text(featuredVehicleResponse.labels[0].label).addClass('vehicleWithDetails-banner'));
+                        image.append(bannerHolder);
+                    }
+
+                    var makeModel = $('<p>').addClass('vehicleWithDetails-makeModel').html(featuredVehicleResponse.brand + " " + featuredVehicleResponse.class_name);
+                    var makeModelContainer = $('<div>').addClass('vehicleWithDetails-makeModelContainer').append(makeModel);
+
+                    var yearValue = $('<span>').addClass('vehicleWithDetails-yearValue').html("");
+                    var year = $('<p>').addClass('vehicleWithDetails-year').append(yearValue);
+                    var yearContainer = $('<div>').addClass('vehicleWithDetails-yearContainer').append(year);
+
+                    var makeModelYearContainer = $('<div>').addClass('vehicleWithDetails-makeModelYearContainer vehicleWithDetails-makeModelYearContainer--popup').append(makeModelContainer).append(yearContainer);
+
+                    var tripDetailsText;
+                    var tripCount = featuredVehicleResponse.bookingCount;
+                    tripDetailsText = "예약 총" + tripCount + "회";
+                    if (tripCount === 0) {
+                        tripDetailsText = "첫 예약의 주인공이 되세요";
+                    }
+                    // if (0 === tripCount) {     tripDetailsText = polyglot.t('homepage.carousel.trips.none'); } else if (1 === tripCount) {     tripDetailsText = polyglot.t('homepage.carousel.trips.singular'); } else {     tripDetailsText =
+                    // polyglot.t('homepage.carousel.trips.plural', {tripCount: tripCount}); }
+                    var tripDetails = $('<span>').text(tripDetailsText).addClass("vehicleWithDetails-attribute");
+                    var detailsAndStars = $('<div>').append(tripDetails);
+
+                    if (featuredVehicleResponse.review_point > 0) {
+                        var star_rate = Math.round(featuredVehicleResponse.review_point)
+                        var empty_count = 5 - star_rate;
+                        var ratings = $('<span>').addClass("rating u-inlineBlock u-verticalAlignMiddle")
+                        for (var i = 0; i < star_rate; i++) {
+                            var star = $('<span>').addClass("glyphicon  glyphicon-star").css({"font-size": "11px"});
+                            ratings.append(star);
+                        }
+                        for (var i = 0; i < empty_count; i++) {
+                            var star = $('<span>').addClass("glyphicon  glyphicon-star").css({"color": "grey", "font-size": "11px"});
+                            ratings.append(star);
+                        }
+
+                        detailsAndStars.append(ratings)
+                    }
+
+                    var ownerVehicleInfo = $('<div>').addClass('mediaObject-body vehicleWithDetails-ownerVehicleInfo vehicleWithDetails-ownerVehicleInfo--popup').append(makeModelYearContainer).append(detailsAndStars);
+
+                    var description = $('<div>').addClass('mediaObject vehicleWithDetails-description').append(ownerVehicleInfo);
+
+                    var currencyCode = "￦";
+
+                    var currency = $('<p>').addClass('mediaObject-item vehicleWithDetails-currency').html(currencyCode);
+
+                    var price = Number(Math.round(featuredVehicleResponse.price + 'e0') + 'e-0');
+                    var value = $('<p>').addClass('vehicleWithDetails-value vehicleWithDetails-value--popup').html(price);
+                    var unit = $('<p>').addClass('vehicleWithDetails-unit vehicleWithDetails-unit--popup').html('일');
+                    var valueCurrencyContainer = $('<div>').addClass('mediaObject vehicleWithDetails-valueCurrencyContainer');
+                    valueCurrencyContainer.append(currency).append(value)
+                    var pricing = $('<div>').addClass('vehicleWithDetails-pricing vehicleWithDetails-pricing--popup').append(valueCurrencyContainer);
+                    var details = $('<div>').addClass('vehicleWithDetails-details vehicleWithDetails-details--popup').append(description).append(pricing);
+
+                    var listingContent = $('<div>').addClass('popup').append(image).append(details);
+                    var car_id = featuredVehicleResponse.id;
+                    if (car_id) {
+                        var url = '/car_info/' + car_id;
+                    } else {
+                        var url = "#"
+                    }
+
+                    var information = $('<a>').attr('href', url).addClass('vehicle-information').append(listingContent);
+
+                    return $('<div>').append(information).addClass("flexCarousel-slide").data("resultIndex", resultIndex);
+                }
+
+                var carouselAnimating = false;
+                function moveCarouselOneStepFlex(carousel, cars, moveRight) {
+                    var slideReel = $(carousel).find('.flexCarousel-slides');
+                    var slides = $(slideReel).find(".flexCarousel-slide");
+                    var centerCarIndex = $(slides[2]).data('resultIndex');
+
+                    if (carouselAnimating) {
+                        //This prevents errors when clicking the arrow faster than the carousel moves
+                        return;
+                    }
+
+                    var newCenterCarIndex;
+                    if (moveRight) {
+                        newCenterCarIndex = (centerCarIndex + 1) % cars.length;
+                    } else {
+                        newCenterCarIndex = (centerCarIndex + cars.length - 1) % cars.length;
+                    }
+
+                    var slideDistance = $(slides[0]).outerWidth() + "px";
+                    if (moveRight) {
+                        slideDistance = "-" + slideDistance;
+                    }
+
+                    carouselAnimating = true;
+                    var slideAnimator = $(carousel).find('.flexCarousel-animation');
+                    //This will move the slide holder. After the animation is complete, the slides are changed in the holder and the holder is snapped back to origin.
+                    $(slideAnimator).animate({
+                        left: slideDistance
+                    }, 250, function () {
+                        $(slideAnimator).css("left", "");
+                        if (moveRight) {
+                            var newLastCarIndex = (newCenterCarIndex + 2) % cars.length;
+                            var slide = getCarouselSlideForCar(cars[newLastCarIndex], newLastCarIndex, carousel);
+                            $(slideReel).find('.flexCarousel-slide:first-child').remove();
+                            slideReel.append(slide);
+                        } else {
+                            var newFirstCarIndex = (newCenterCarIndex + cars.length - 2) % cars.length;
+                            var slide = getCarouselSlideForCar(cars[newFirstCarIndex], newFirstCarIndex, carousel);
+                            $(slideReel).find('.flexCarousel-slide:last-child').remove();
+                            slideReel.prepend(slide);
+                        }
+                        carouselAnimating = false;
+                    });
+                }
+
+                var initializeFlexCarousel = function (selector, cars, trackingId) {
+                    if (cars.length < 3) {
+                        console.log("Your Fail idiot")
+                        //The flex carousel is defined for a minimum of 3 cars
+                        return;
+                    }
+
+                    var carousel = $(selector).find('.js-carousel');
+                    carousel.data('trackingId', trackingId);
+                    carousel.removeClass('is-loading');
+
+                    var rightArrow = $(carousel).find('.js-carouselRightArrow');
+                    var leftArrow = $(carousel).find('.js-carouselLeftArrow');
+
+                    $(rightArrow).on('click', function () {
+                        moveCarouselOneStepFlex(carousel, cars, true);
+                    });
+
+                    $(leftArrow).on('click', function () {
+                        moveCarouselOneStepFlex(carousel, cars, false);
+                    });
+
+                    $(carousel).on('swiperight', function () {
+                        moveCarouselOneStepFlex(carousel, cars, false);
+                    });
+
+                    $(carousel).on('swipeleft', function () {
+                        moveCarouselOneStepFlex(carousel, cars, true);
+                    });
+
+                    if (cars.length === 3) {
+                        //hide navigation when all results are visible (when 3 results and full width)
+                        $(rightArrow).addClass('u-mediumScreenOnly');
+                        $(leftArrow).addClass('u-mediumScreenOnly');
+                    }
+                    setCarsInFlexCarousel(carousel, cars, 0);
+                };
+                var recommend_cars = {{recommend_cars|tojson}};
+                initializeFlexCarousel($.find('#js-dealsCarousel'), recommend_cars, 'deals');
+
+            })
+        </script>
+    {% endblock %}

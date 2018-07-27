@@ -1,0 +1,161 @@
+{% extends "base_temp.html"%}
+{% block style%}
+<link rel="stylesheet" type="text/css" href={{ url_for('static',filename='css/carupload/styles.a92b76dabd05f7aaec98dfd845b162fe.css',version='1.11')}} >
+{% endblock %}
+{% block content%}
+
+<div id="pageContainer-content">
+    <div>
+        {% from "_helpers.html" import render_dashboard_header %}
+        {{render_dashboard_header('notifications')}}
+    </div>
+    <div class="pageContainer u-contentBottomPadding pageContainer--centered" style="min-height: 540px; max-width: 700px;">
+        <div aria-busy="false">
+            <div class="u-noMarginSmallScreenAndBelow u-marginTopLargest">
+                <div class="pendingRequests">
+                    <div class="dashboardActivityFeed dashboardActivityFeed--pendingRequests">
+                        {% if bookingList %}
+                        <div class="dashboardActivityFeed-divider dashboardActivityFeed-divider--pendingRequests u-alignCenter">
+                            <h6 class="dashboardActivityFeed-dividerText"> 대기중인 예약</h6>
+                        </div>
+                        {% endif %}
+                        {% for booking in bookingList %}
+                        <div class="dashboardActivityFeed-item">
+                            <a class="dashboardActivityFeed-link" href="{{url_for('carbooking_app.reservation_page',booking_id=booking.id)}}">
+                                <div class="dashboardActivityFeed-details">
+                                    <div class="dashboardActivityFeed--profilePhoto">
+                                        <div>
+                                        </div>
+                                    </div>
+                                    <div class="dashboardActivityFeed-summary">
+                                        {% if booking.is_car_owner %}
+                                        <p class="dashboardActivityFeed-message u-noMargin">{{booking.renter.name}}님이 {{booking.car.class_name}}을 빌리고싶어하십니다.</p>
+                                        <p class="dashboardActivityFeed-time u-noMargin">{{booking.owner_earning}}원의 수익이 발생합니다.</p>
+                                        <p class="dashboardActivityFeed-time u-noMargin">{{booking.remaining_time}}시간안에 답을해야 합니다.</p>
+                                        {% else %}
+                                        <p class="dashboardActivityFeed-message u-noMargin">{{booking.car.user.name}}님의 {{booking.car.class_name}}을 요청하였습니다.</p>
+                                        <p class="dashboardActivityFeed-time u-noMargin">{{booking.remaining_time}}시간안에 답이 없으면 예약이 취소됩니다.</p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="dashboardActivityFeed-vehicle">
+                                        <img alt="Vehicle image" class="vehicleImage vehicleImage--medium vehicleImage--roundedCorners" src="{{booking.imgsrc}}">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                </div>
+            </div>
+            <div class="dashboardActivityFeed dashboardActivityFeed--hidingPendingRequests">
+                <div class="dashboardActivityFeed-divider u-alignCenter">
+                    <h6 class="dashboardActivityFeed-dividerText">활동내역</h6>
+                </div>
+                <div class="infiniteScroll">
+                    {% for log in logList%}
+                    <div class="dashboardActivityFeed-item">
+                        <a class="dashboardActivityFeed-link" href="{{url_for('carbooking_app.reservation_page',booking_id = log.custom_data['booking_id'])}}">
+                            <div class="dashboardActivityFeed-details">
+                                <div class="dashboardActivityFeed--profilePhoto">
+                                    {%if log.custom_data.get('action') == "message"%}
+                                        <div>
+                                            <img alt="{{log.custom_data.owner_name}}" class="profilePhoto profilePhoto--smallResponsive profilePhoto--round profilePhoto--turo" src="{{log.custom_data.sender_img}}">
+                                        </div>
+                                        {% elif log.custom_data.get('action') =='auto_cancel_booking' or  log.custom_data.get('action')=='finish_booking' %}
+                                        <div>
+                                            <img alt="와이카" class="profilePhoto profilePhoto--smallResponsive profilePhoto--round" src="{{url_for('static',filename='images/wicarlogo.png')}}">
+                                        </div>
+                                        {% else %}
+                                        <div>
+                                            {%if log.custom_data.get('user_id') == log.custom_data.get('owner_id')%}
+                                                <img alt="{{log.custom_data.owner_name}}" class="profilePhoto profilePhoto--smallResponsive profilePhoto--round profilePhoto--turo" src="{{log.custom_data.get('owner_img')}}">
+                                            {% else %}
+                                                <img alt="{{log.custom_data.renter_name}}" class="profilePhoto profilePhoto--smallResponsive profilePhoto--round profilePhoto--turo" src="{{log.custom_data.get('renter_img')}}">
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                {% if log.custom_data.get('action') == 'cancel_booking'%}
+                                <div class="dashboardActivityFeed-summary">
+                                    <p class="dashboardActivityFeed-title u-bold u-noMargin">예약 취소</p>
+                                    {%if log.custom_data['user_id'] == log.custom_data.owner_id%}
+                                        {%if log.custom_data['user_id'] ==user_id%}
+                                        <p class="dashboardActivityFeed-message u-noMargin">예약을 취소하였습니다.</p>
+                                        {% else %}
+                                        <p class="dashboardActivityFeed-message u-noMargin">{{log.custom_data.get('owner_name')}}님이 예약을 취소하였습니다.</p>
+                                        {% endif %}
+                                    {% else %}
+                                    <p class="dashboardActivityFeed-message u-noMargin">{{log.custom_data.get('renter_name')}}님이 예약을 취소하였습니다.</p>
+                                    {% endif %}
+                                    <div>
+                                        <p class="dashboardActivityFeed-time u-noMargin">{{log.date_created.strftime('%Y-%m-%d %H:%m')}}</p>
+                                    </div>
+                                </div>
+                                {% elif log.custom_data.get('action') == 'booking_confirm'%}
+                                <div class="dashboardActivityFeed-summary">
+                                    <p class="dashboardActivityFeed-title u-bold u-noMargin">예약 확인</p>
+                                    {%if log.custom_data['user_id'] ==user_id%}
+                                    <p class="dashboardActivityFeed-message u-noMargin">예약을 수락하였습니다.</p>
+                                    {% else %}
+                                    <p class="dashboardActivityFeed-message u-noMargin">{{log.custom_data.owner_name}}님이 예약을 수락하였습니다.</p>
+                                    {% endif %}
+                                    <div>
+                                        <p class="dashboardActivityFeed-time u-noMargin">{{log.date_created.strftime('%Y-%m-%d %H:%m')}}</p>
+                                    </div>
+                                </div>
+                                {% elif log.custom_data.get('action') == 'booking_disallow'%}
+                                <div class="dashboardActivityFeed-summary">
+                                    <p class="dashboardActivityFeed-title u-bold u-noMargin">예약 거절</p>
+                                    {%if log.custom_data['user_id'] ==user_id%}
+                                    <p class="dashboardActivityFeed-message u-noMargin">예약을 거절하였습니다.</p>
+                                    {% else %}
+                                    <p class="dashboardActivityFeed-message u-noMargin">{{log.custom_data.owner_name}}님이 예약을 거절하였습니다.</p>
+                                    {% endif %}
+                                    <div>
+                                        <p class="dashboardActivityFeed-time u-noMargin">{{log.date_created.strftime('%Y-%m-%d %H:%m')}}</p>
+                                    </div>
+                                </div>
+                                {% elif log.custom_data.get('action') == 'message'%}
+                                <div class="dashboardActivityFeed-summary">
+                                    <p class="dashboardActivityFeed-title u-bold u-noMargin">새 메세지</p>
+                                    {%if log.custom_data['user_id'] ==user_id%}
+                                    <p class="dashboardActivityFeed-message u-noMargin">{{log.custom_data.receiver_name}}님에게 메세지를 보냈습니다.</p>
+                                    {% else %}
+                                    <p class="dashboardActivityFeed-message u-noMargin">{{log.custom_data.sender_name}}님이 메세지를 보냈습니다.</p>
+                                    {% endif %}
+                                    <div>
+                                        <p class="dashboardActivityFeed-time u-noMargin">{{log.date_created.strftime('%Y-%m-%d %H:%m')}}</p>
+                                    </div>
+                                </div>
+                                {% elif log.custom_data.get('action')=='auto_cancel_booking'%}
+                                <div class="dashboardActivityFeed-summary">
+                                    <p class="dashboardActivityFeed-title u-bold u-noMargin">예약 자동 취소</p>
+                                    <p class="dashboardActivityFeed-message u-noMargin">시간이 지나 와이카 예약이 자동 취소되었습니다.</p>
+                                    <div>
+                                        <p class="dashboardActivityFeed-time u-noMargin">{{log.date_created.strftime('%Y-%m-%d %H:%m')}}</p>
+                                    </div>
+                                </div>
+                                {% elif log.custom_data.get('action')=='finish_booking'%}
+                                <div class="dashboardActivityFeed-summary">
+                                    <p class="dashboardActivityFeed-title u-bold u-noMargin">서비스완료</p>
+                                    <p class="dashboardActivityFeed-message u-noMargin">서비스 시간이 완료되었습니다.</p>
+                                    <div>
+                                        <p class="dashboardActivityFeed-time u-noMargin">{{log.date_created.strftime('%Y-%m-%d %H:%m')}}</p>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}

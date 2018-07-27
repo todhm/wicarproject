@@ -1,0 +1,100 @@
+{% extends "base_temp.html"%}
+{% block style%}
+<style>
+.holder {
+position: absolute;
+margin: 7px 8px;
+color: black;
+cursor: auto;
+font-size: 9pt;
+z-index: 1;
+}
+
+.secondplaceholder{
+    color: grey;
+    font-size:6pt;
+    margin-left:3px;
+}
+
+input {
+    padding:5px;
+    font-size:7pt;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="login-modal-dialog">
+    <div class="container-fluid">
+        <h4 class="login-dialog-header">회원가입</h4>
+        <div class="row btn-login-modal">
+            <div class="col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                {% from "_formhelpers.html" import render_placeholder_field %}
+                <form method="POST" action="{{ url_for('carshare_app.signup_page')}}"  class="form-signin" role="form">
+                  {{ form.hidden_tag() }}
+                  {{ render_placeholder_field(form.username,placeholder='사용자명',secondplaceholder='운전면허증과 동일한 이름 사용') }}
+                  {{ render_placeholder_field(form.email, class='form-control', showlabel=False, placeholder='이메일') }}
+                  {{ render_placeholder_field(form.password, class='form-control',showlabel=False, placeholder='비밀번호') }}
+                  {{ render_placeholder_field(form.confirm, class='form-control',showlabel=False,placeholder='비밀번호확인') }}
+                  <button class="dialog-link button button--fluid login-modal-button form-control  btn-login-or" type="submit" data-dialog-class="no-titlebar">가입하기</button>
+                </form>
+                {% include '_flashmessages.html' %}
+            </div>
+        </div>
+        <div class="row btn-login-modal">
+            <div class="col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                <fb:login-button   data-width="100%" data-max-rows="1" data-size="medium" data-button-type="login_with"  data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"  scope="public_profile,email" onlogin="sendTokenToServer();">
+                       <a  class="button button--facebook button--large button--fluid" tabindex="1" href='javascript:sendTokenToServer()'>Facebook 로그인 &nbsp; &nbsp;</a>
+               </fb:login-button>
+           </div>
+        </div>
+        <div class="row btn-login-modal">
+           <div  class = "googleSigninButton col-md-8 col-sm-6 col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+              <span  class="logingoogle signinButton g-signin button--fluid"
+                data-scope="openid email profile"
+                data-clientid="151174455480-8mn38v751rfa0bol88hm2adpd4a0jvrs.apps.googleusercontent.com"
+                data-redirecturi="postmessage"
+                data-accesstype="offline"
+                data-cookiepolicy="single_host_origin"
+                data-callback="signInCallback"
+                data-approvalprompt="force">
+                <img class="google-mark" src='/static/images/googlemark.png' />
+                Google 로그인
+              </span>
+            </div>
+         </div>
+         <div class="row btn-login-modal">
+             <div  class = "googleSigninButton col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                 <a id="custom-login-btn" href="javascript:loginWithKakao()">
+                     <img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="100%"/>
+                 </a>
+             </div>
+         </div>
+         <div class="row btn-login-modal">
+             <div class="col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3 waitingResult">
+             </div>
+         </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script%}
+<script>
+$(function() {
+    $(".holder + input").focus(function() {
+        $(this).prev('.holder').hide();
+    });
+    $(".holder + input").blur(function() {
+        if($(this).val().length) {
+          $(this).prev('.holder').hide();
+        } else {
+          $(this).prev('.holder').show();
+      }
+    });
+    $(".holder").click(function() {
+        $(this).next().focus();
+    });
+});
+
+</script>
+{% endblock %}

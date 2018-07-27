@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UsersList	renders	a	snapshot	properly 1`] = `
+<div
+  className="grid-item grid-item--3"
+>
+  <label
+    htmlFor="js-makesInput"
+  >
+    테스트
+  </label>
+  <span
+    className="styled-select-container styled-select-container--fluid"
+  >
+    <select
+      className="required"
+      id="js-makesInput"
+      name={undefined}
+      onChange={undefined}
+      value="test1"
+    >
+      <option
+        value=""
+      >
+        테스트라벨
+      </option>
+      <option
+        value="test3"
+      >
+        test3
+      </option>
+      <option
+        value="test4"
+      >
+        test4
+      </option>
+    </select>
+    <span
+      className="text"
+    >
+      test1
+    </span>
+    <span
+      className="errorMessage-text js-locationErrorText"
+    >
+      
+    </span>
+  </span>
+</div>
+`;

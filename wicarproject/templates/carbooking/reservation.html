@@ -1,0 +1,361 @@
+{% extends "base_temp.html"%}
+{% block style%}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/carupload/styles.a92b76dabd05f7aaec98dfd845b162fe.css',version='1.2')}}" >
+<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap-star-rating/star-rating.min.css')}}" />
+{% endblock %}
+{% block content%}
+
+<div id="pageContainer-content">
+    <div>
+        <div class="reservationDetails">
+            <div>
+                <div class="container u-contentTopPadding u-contentBottomPadding">
+                    <div class="reservationDetails-header">
+                        {% if booking.status==0%}
+                        <h3 class="reservationDetails-pageTitle">대기중인 예약</h3>
+                        {% elif booking.status < 0 %}
+                        <h3 class="reservationDetails-pageTitle">예약취소</h3>
+                        {% elif booking.status==2 %}
+                        <h3 class="reservationDetails-pageTitle">예약완료</h3>
+                        {% else %}
+                        <h3 class="reservationDetails-pageTitle">서비스완료</h3>
+                        {% endif %}
+                        <div class="vehicleDetailsHeader u-pullRight">
+                            <div class="vehicleDetailsHeader-thumbnail">
+                                <a href="{{url_for('carbooking_app.car_info',car_id=booking.car_id)}}"><img alt="Michael&#39;s Toyota" class="vehicleImage vehicleImage--small vehicleImage--roundedCorners" src="{{booking.imgsrc}}"></a>
+                            </div>
+                            <div class="vehicleDetailsHeader-text">
+                                <div>{{booking.car.class_name}}</div>
+                                <a href="{{url_for('carbooking_app.car_info',car_id=booking.car_id)}}">차량정보 보기</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reservationDetails-sidebar sidebar">
+                        {% if booking.status == 0 %}
+                        <div class="reservationDetails-actions u-fullWidth">
+                            <div class="text--smallCopy">{{booking.remaining_time}}시간 안에 예약을 수락하지 않으면 예약이 자동 취소됩니다.</div>
+                            <div class="buttonWrapper buttonWrapper--smallerTopMargin">
+                                <button class="button button--fluid button--purple" href="#bookingConfirm" data-toggle="modal">요청 확인하기</button>
+                            </div>
+                            <div class="buttonWrapper buttonWrapper--smallerTopMargin">
+                                <button class="button button--fluid" href="#bookingDecline"  data-toggle="modal">요청 거절하기</button>
+                            </div>
+                        </div>
+                        {% elif booking.status<0 %}
+                        <div class="reservationDetails-actions u-fullWidth">
+                            <div class="text--smallCopy">예약이 취소되었습니다.</div>
+                        </div>
+                        {% elif booking.status == 2 %}
+                        <div class="reservationDetails-actions u-fullWidth">
+                            <div class="text--smallCopy">예약이 완료되었습니다.</div>
+                            <div class="buttonWrapper buttonWrapper--smallerTopMargin">
+                                <button class="button button--fluid" href="#bookingDecline"  data-toggle="modal">예약 취소하기</button>
+                            </div>
+                        </div>
+                        {% elif booking.status == 3 %}
+                        <div class="reservationDetails-actions u-fullWidth">
+                            <div class="text--smallCopy">서비스가 완료되었습니다.</div>
+                        </div>
+                        {% endif %}
+                        {% if error %}
+                        <div class="warning">
+                            {{error}}
+                        </div>
+                        {% endif %}
+                        <div class="grid">
+                            <div class="grid-item grid-item--9 grid-item--medium9 grid-item--small10 grid-item--xsmall9">
+                                <a class="text--green" href="{{url_for('carshare_app.user_info',user_id=booking.renter_id)}}">
+                                    <div class="text--larger u-bold">{{booking.renter.name}}</div>
+                                </a>
+                            </div>
+                            <div class="grid-item grid-item--3 grid-item--medium3 grid-item--small2 grid-item--xsmall2">
+                                {% if booking.userimg %}
+                                <a href="{{url_for('carbooking_app.car_info',car_id=booking.car_id)}}">
+                                    <div>
+                                        <img alt="{{booking.renter.name}}" class="profilePhoto profilePhoto--medium profilePhoto--round" src="{{booking.userimg}}">
+                                    </div>
+                                </a>
+                                {% else %}
+                                <a href="{{url_for('carbooking_app.car_info',car_id=booking.car_id)}}">
+                                    <div>
+                                        <img alt="{{booking.renter.name}}" class="profilePhoto profilePhoto--medium profilePhoto--round" src="{{url_for('static',filename='images/userphoto.png')}}">
+                                    </div>
+                                </a>
+                                {% endif %}
+                            </div>
+                            <div class="grid-item grid-item--12">
+                                <ul class="section section--withSmallMargin">
+                                    <li class="driverVerification-item text--smallCopy"><span>번호인증</span><span class="driverVerification-badge u-pullRight"></span></li>
+                                    <li class="driverVerification-item text--smallCopy"><span>면허인증</span><span class="driverVerification-badge u-pullRight"></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="section section--withSmallMargin section--borderTop label label--greyDusty">예약 #{{booking.id}}</div>
+                        <div class="socialButtons reservationDetails-socialButtons">
+                            <button class="socialButton socialButton-icon socialButton-icon--facebook" title="Share on facebook" type="button"></button>
+                            <button class="socialButton socialButton-icon socialButton-icon--twitter" title="Share on twitter" type="button"></button>
+                            <button class="socialButton socialButton-icon socialButton-icon--email" title="Share via email" type="button"></button>
+                        </div>
+                    </div>
+                    <div class="layoutSingleColumn">
+                        <div class="tripDetails">
+                            <div class="vehicleDetails u-tinyScreenOnly">
+                                <div class="vehicleDetails-thumbnail">
+                                    <a href="#">
+                                        <img alt="Michael&#39;s Toyota" class="vehicleImage vehicleImage--small vehicleImage--roundedCorners" src="./reserv_confirmation_page_files/JVvv485WThSmEulhOWVZEA.100x60.jpg">
+                                    </a>
+                                </div>
+                                <div class="vehicleDetails-text">
+                                    <div>{{booking.car.brand}} {{booking.car.class_name}}</div>
+                                    <a href="{{url_for('carbooking_app.car_info',car_id=booking.car_id)}}">자동차상세정보</a>
+                                </div>
+                            </div>
+                            <div class="section section--borderTopTinyScreen section--withSmallMargin">
+                                <div class="grid grid--withVerticalSpacing">
+                                    <div class="grid-item grid-item--3 label vehicleSectionTitle">{{booking.renter.name}}님의 여행정보</div>
+                                    <div class="grid-item grid-item--9 u-breakWord">
+                                        <div class="reservationDetails-schedule tripSchedule tripSchedule--large">
+                                            {% if booking.status < 0 %}
+                                            <div class="tripSchedule-startDate tripSchedule-item tripSchedule-item--large schedule-dateTime schedule-dateTime--large is-cancelled">
+                                            {% else %}
+                                            <div class="tripSchedule-startDate tripSchedule-item tripSchedule-item--large schedule-dateTime schedule-dateTime--large">
+                                            {% endif %}
+                                                <div class="schedule-date">{{booking.start_time.year}}년 {{booking.start_time.month}}월 {{booking.start_time.day}}일</div>
+                                                <div class="schedule-time">{{booking.start_time.hour}}:{{booking.start_time.minute}}</div>
+                                            </div>
+                                            {% if booking.status < 0 %}
+                                            <div class="tripSchedule-item tripSchedule-item--large tripSchedule-spacer tripSchedule-spacer--large schedule-spacer schedule-spacer--large is-cancelled">
+                                            {% else %}
+                                            <div class="tripSchedule-item tripSchedule-item--large tripSchedule-spacer tripSchedule-spacer--large schedule-spacer schedule-spacer--large">
+                                            {% endif %}
+                                            </div>
+                                            {% if booking.status < 0 %}
+                                            <div class="tripSchedule-endDate tripSchedule-item tripSchedule-item--large schedule-dateTime schedule-dateTime--large is-cancelled">
+                                            {% else %}
+                                            <div class="tripSchedule-endDate tripSchedule-item tripSchedule-item--large schedule-dateTime schedule-dateTime--large">
+                                            {% endif %}
+                                                <div class="schedule-date">{{booking.end_time.year}}년 {{booking.end_time.month}}월 {{booking.end_time.day}}일</div>
+                                                <div class="schedule-time">{{booking.end_time.hour}}:{{booking.end_time.minute}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section section--borderTopSmallScreen section--withSmallMargin">
+                                <div>
+                                    <div class="grid grid--withVerticalSpacing">
+                                        <div class="grid-item grid-item--3 label vehicleSectionTitle">위치</div>
+                                        <div class="grid-item grid-item--9 u-breakWord">
+                                            <div>
+                                                <div class="reservationLocation-icon reservationLocation-icon--home"></div>
+                                                {% if booking.status < 0 %}
+                                                <span class="reservationLocation-address is-cancelled">
+                                                {% else %}
+                                                <span class="reservationLocation-address">
+                                                {% endif %}
+                                                    <div>{{booking.car.address}}</div>
+                                                    <div>{{booking.car.detail_address}}</div>
+                                                </span>
+                                            </div>
+                                            {% if booking.status >= 0%}
+                                            <div>
+                                                <a class="u-smallTopMargin u-inlineBlock reservationLocation-getDirections"  target="_blank" href="{{booking.mapurl}}">위치보기</a>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section section--borderTopSmallScreen section--withSmallMargin">
+                                <div class="grid grid--withVerticalSpacing"><div class="grid-item grid-item--3 label vehicleSectionTitle">총 수익</div>
+                                    <div class="reservationDetails-totalEarnings grid-item grid-item--9 u-breakWord"><span>{{booking.owner_earning}}₩</span></div>
+                                </div>
+                            </div>
+                            <div class="section section--borderTopSmallScreen section--withSmallMargin">
+                                <div class="grid grid--withVerticalSpacing"><div class="grid-item grid-item--3 label vehicleSectionTitle">총 거리제한</div>
+                                    <div class="reservationDetails-totalEarnings grid-item grid-item--9 u-breakWord"><span>{{booking.total_distance}}KM</span></div>
+                                </div>
+                            </div>
+                            <div class="section section--borderTopSmallScreen section--withSmallMargin">
+                                <div class="grid grid--withVerticalSpacing">
+                                    <div class="grid-item grid-item--3 label vehicleSectionTitle">운전자</div>
+                                    <div class="reservationDetails-renters grid-item grid-item--9 u-breakWord">
+                                        <div class="reservationDetails-renterNameContainer">
+                                            <a href="{{url_for('carshare_app.user_info',user_id=booking.renter.id)}}">
+                                                <div class="reservationDetails-renterName u-truncate">{{booking.renter.name}}</div>
+                                            </a>
+                                            <div class="reservationDetails-renterStatus text--smallCopy">최종 운전자</div>
+                                        </div>
+                                        <div class="reservationDetails-renterPolicy text--smallCopy">다음 운전자가 차주에게 차를 전달받고 돌려줄것입니다.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%if booking.status >=2 %}
+                            <div class="section section--borderTopSmallScreen section--withSmallMargin">
+                                <div class="grid grid--withVerticalSpacing reservationDetails-tripPhotos">
+                                    <div class="grid-item grid-item--3 label vehicleSectionTitle">사진공유하기</div>
+                                    <div class="grid-item grid-item--9 u-breakWord">
+                                        {% if bookingPhotoList%}
+                                        {%for bookingPhoto in bookingPhotoList%}
+                                        <a >
+                                            <img alt="presentation"  style="width:60px;height:60px"  class="reservationDetails-tripPhotoThumbnail" src="{{bookingPhoto.imgsrc}}">
+                                        </a>
+                                        {%endfor%}
+                                        <a class="u-block" href="{{url_for('carbooking_app.share_booking_photo',booking_id=booking.id)}}">사진추가하기</a>
+                                        {% else %}
+                                        <a class="u-block" href="{{url_for('carbooking_app.share_booking_photo',booking_id=booking.id)}}">사진공유하기</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="section">
+                            <div class="reservationMessages">
+                                <ul class="list">
+                                    {% for message in messageList %}
+                                    <li class="reservationMessages-item grid" id="latest-message">
+                                        <a class="grid-item grid-item--3 grid-item--medium2 grid-item--small2 grid-item--xsmall3 u-alignRight" href="{{url_for('carshare_app.user_info',user_id=message.sender_id)}}">
+                                            <div>
+                                                <img alt="{{message.sender.name}}" class="profilePhoto profilePhoto--medium profilePhoto--round profilePhoto--renter" src="{{message.sender.imgsrc}}">
+                                            </div>
+                                        </a>
+                                        <div class="grid-item grid-item--9 grid-item--medium10 grid-item--small10 grid-item--xsmall9">
+                                            <div class="reservationMessages-message">{{message.message}}</div>
+                                            <div>
+                                                <a class="reservationMessages-authorName" href="{{url_for('carshare_app.user_info',user_id=message.sender_id)}}">{{message.sender.name}}</a>
+                                                <span class="reservationMessages-createdTime" title="4 minutes ago">{{message.register_date.strftime('%Y-%m-%d %H:%M')}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="grid">
+                                    <div class="grid-item grid-item--3 grid-item--medium2 grid-item--small2 grid-item--xsmall3 u-alignRight">
+                                        <div>
+                                            {% if booking.ownerimg %}
+                                            <img alt="Michael S." class="profilePhoto profilePhoto--medium profilePhoto--round profilePhoto--owner" src="{{booking.ownerimg}}">
+                                            {% else %}
+                                            <img alt="Michael S." class="profilePhoto profilePhoto--medium profilePhoto--round profilePhoto--owner" src="{{url_for('static',filename='images/userphoto.png')}}">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="grid-item grid-item--9 grid-item--medium10 grid-item--small10 grid-item--xsmall9">
+                                        <form class="ReservationSendMessageForm" action="{{url_for('carbooking_app.send_message',booking_id=booking.id)}}" method="POST">
+                                            {{messageForm.hidden_tag()}}
+                                            <textarea name="message" class="textAreaField textAreaField--small textAreaField--purple" id="message" placeholder="메세지를 보내세요"></textarea>
+                                            <div class="buttonWrapper buttonWrapper--baseTopMargin">
+                                                <button class="button button--purple" type="submit">보내기</button>
+                                            </div>
+                                        </form>
+                                        {% if message_error %}
+                                            <span class="text-danger">{{ message_error }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% if booking.status ==3 %}
+                        <div class="section">
+                            <div class="reservationMessages">
+                                <ul class="list">
+                                    {% if renter_review  %}
+                                    <li class="reservationMessages-item grid" id="latest-message">
+                                        <a class="grid-item grid-item--3 grid-item--medium2 grid-item--small2 grid-item--xsmall3 u-alignRight" href="{{url_for('carshare_app.user_info',user_id=booking.renter.id)}}">
+                                            <div>
+                                                <img class="profilePhoto profilePhoto--medium profilePhoto--round profilePhoto--renter" src="{{booking.userimg}}">
+                                            </div>
+                                        </a>
+                                        <div class="grid-item grid-item--9 grid-item--medium10 grid-item--small10 grid-item--xsmall9">
+                                            <td><input name="input-3" value="{{renter_review.review_point}}" class="rating-loading input-3"></td>
+                                            <div class="reservationMessages-message">{{renter_review.review}}</div>
+                                        </div>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                                {% if not renter_review %}
+                                <div class="grid">
+                                    <div class="grid-item grid-item--3 grid-item--medium2 grid-item--small2 grid-item--xsmall3 u-alignRight">
+                                        <div>
+                                            {% if booking.userimg %}
+                                            <img alt="Michael S." class="profilePhoto profilePhoto--medium profilePhoto--round profilePhoto--owner" src="{{booking.userimg}}">
+                                            {% else %}
+                                            <img alt="Michael S." class="profilePhoto profilePhoto--medium profilePhoto--round profilePhoto--owner" src="{{url_for('static',filename='images/userphoto.png')}}">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="grid-item grid-item--9 grid-item--medium10 grid-item--small10 grid-item--xsmall9">
+                                        {% from "_formhelpers.html" import render_star%}
+                                        <form class="ReservationSendMessageForm" action="{{url_for('carbooking_app.add_renter_review',booking_id=booking.id)}}" method="POST">
+                                            {{reviewForm.hidden_tag()}}
+                                            {{render_star(reviewForm.review_point)}}
+                                            <textarea name="review" class="textAreaField textAreaField--small textAreaField--purple" id="review" placeholder="리뷰를 남겨주세요"></textarea>
+                                            <div class="buttonWrapper buttonWrapper--baseTopMargin">
+                                                <button class="button button--purple" type="submit">리뷰남기기</button>
+                                            </div>
+                                        </form>
+                                        {% if review_error %}
+                                            <span class="text-danger">{{ review_error }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="toaster toaster-exited toast"><p class="toast-message"></p></div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block modal%}
+<div id="bookingConfirm" class="modal fade authDialog" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+             <h4 class="authDialog-header authDialog-signUpheader">예약을 확정하시겠습니까?</h4>
+             <div class="modal-footer">
+                 <form action="{{url_for('carbooking_app.reservation_page',booking_id=booking.id)}}" method="POST">
+                     {{confirmForm.hidden_tag()}}
+                     <button class="button--green" type="submit">예</button>
+                     <button type="button" class="button" data-dismiss="modal">아니요</button>
+                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="bookingDecline" class="modal fade authDialog" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+             <h4 class="authDialog-header authDialog-signUpheader">예약을 거절하시겠습니까?</h4>
+             {% if booking.status==2 and booking_owner_24 %}
+             <div class="authDialog-signUpheader">
+                 <p>고객님께서 예약을 취소할 시 5만원의 벌금이 부과됩니다.</p>
+             </div>
+             {% elif booking.status==2 and not booking_owner_24 %}
+             <div class="authDialog-signUpheader">
+                 <p>고객님께서 예약을 취소할 시 3만원의 벌금이 부과됩니다.</p>
+             </div>
+             {% endif %}
+             <div class="modal-footer">
+                 <form action="{{url_for('carbooking_app.reservation_page',booking_id=booking.id)}}" method="POST">
+                     {{endForm.hidden_tag()}}
+                     <button class="button--green" type="submit">예</button>
+                     <button type="button" class="button" data-dismiss="modal">아니요</button>
+                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/carbooking/bootstrap-star-rating/star-rating.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/carbooking/reservation.js') }}"></script>
+{% endblock %}

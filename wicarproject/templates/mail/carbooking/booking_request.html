@@ -1,0 +1,5 @@
+{% extends "mail/base.html"%}
+
+{% block body%}
+    {{user.name}}님이 예약을 신청하였습니다. <a href="{{url_for('carbooking_app.get_booking_list')}}">링크</a>를 확인해주세요.
+{% endblock %}

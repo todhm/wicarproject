@@ -1,0 +1,4 @@
+{% extends "mail/base.txt"%}
+{%block body%}
+{{user.name}}님이 예약을 신청하였습니다. https://www.wicar.com/notifications 에서 예약을 확인해주세요.
+{% endblock %}

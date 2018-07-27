@@ -1,0 +1,127 @@
+.login-header {
+    padding: 15px;
+}
+
+.login-dialog-header{
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 36px;
+    text-transform: none;
+    margin: 30px 0 30px;
+    text-align:center;
+}
+
+.login-close{
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    border-radius:50%;
+    background: white;
+    border-color:black
+
+}
+.login-modal-dialog{
+    width:30%;
+    margin:auto;
+}
+.modal-content{
+    margin-top:15%;
+}
+.logingoogle{
+    border-radius: 5px !important;
+    background-color: rgb(255, 94, 96)!important;
+    background-size:contain;
+    width:100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #fff;
+    color:white;
+    height: 39px;
+    padding: 0 14px;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: top;
+    font-size: 15px;
+    transition: .5s all ease;
+    line-height:2;
+}
+.google-mark{
+    float:left;
+    height:80%;
+    padding-top:6px;
+}
+.or-line{
+    width:100%;
+    text-align:center;
+    border-bottom: 1px solid lightgray;
+    line-height:0.1em;
+    margin:10px 0 20px;
+}
+.or-line span{
+    background:#fff; padding:0 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+
+}
+.login-modal-button{
+    background-color:black;
+    color:white;
+}
+.signup-modal-button{
+    border:none;
+    background-color:white;
+    color:black;
+}
+@media(max-width:770px){
+    .login-dialog-header{
+        margin-bottom:20px;
+    }
+    .login-modal-dialog{
+        width:60%;
+        margin:auto;
+    }
+
+    .login-dialog-header{
+        font-size:30px;
+        margin-bottom:23px;
+    }
+    .logingoogle{
+        padding-top:8px;
+    }
+    .google-mark{
+        float:left;
+        padding-top:0px;
+    }
+}
+.btn-login-modal{
+    margin-bottom:8px;
+}
+.btn-login-or{
+    margin-bottom:20px;
+    margin-top:20px;
+}
+@media(max-width:430px){
+    .login-dialog-header{
+        margin-bottom:15px;
+    }
+    .login-modal-dialog{
+        width:80%;
+        margin:auto;
+    }
+
+    .login-dialog-header{
+        font-size:28px;
+        margin-bottom:20px;
+    }
+    .logingoogle{
+        padding-top:5px;
+    }
+}
+.btn-login-modal{
+    margin-bottom:5px;
+}

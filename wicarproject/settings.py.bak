@@ -1,0 +1,98 @@
+import os
+import json
+#SECRET_KEY
+SECRET_KEY = 'your secret key'
+HASH_SECRET_KEY='binary HASH SECRET KEY'
+#DB URIS
+DB_USERNAME='postgresql database username'
+DB_PASSWORD='postgresql database password'
+DB_HOST ='postgres:5432'
+DATABASE_NAME='test'
+TEST_DB_NAME='unittestdb'
+DB_URI = 'postgresql+psycopg2://{}:{}@{}/{}'.format(DB_USERNAME,DB_PASSWORD,DB_HOST,DATABASE_NAME)
+TEST_DB_URI ='postgresql+psycopg2://{}:{}@{}/{}'.format(DB_USERNAME,DB_PASSWORD,DB_HOST,TEST_DB_NAME)
+SQLALCHEMY_DATABASE_URI = DB_URI
+SQLALCHEMY_TRACK_MODIFICATIONS =False
+
+#MONGO_URIS
+MONGODB_SETTINGS = {
+        'host':'mongodb database name'
+    }
+
+MONGO_URI = 'MongoDB Database Name'
+TEST_MONGO_URI ='test mongodb '
+
+# IMAGE SETTINGS
+UPLOADED_IMAGES_DEST = '/static/images'
+UPLOADED_FOLDER = '/static/images/usercars'
+BOOKING_IMAGE_FOLDER = '/static/images/bookingimage'
+USER_IMAGE_FOLDER = '/static/images/userprofile'
+STATIC_IMAGE_URL='images'
+UPLOADED_IMAGES_URL = '/static/wicar_react/static/images/usercars/'
+CAMPING_CAR_IMAGE = '/static/images/camping/'
+
+# CELERY settings
+CELERY_TASK_RESULT_EXPIRES = 5 * 60  # Dispose of Celery Beat results after 10 minutes.
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND ='redis://localhost:6379/0'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TIMEZONE = 'Asia/Seoul'
+CELERY_ENABLE_UTC = True
+
+LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
+#PAGE settings
+PER_PAGE=10
+
+
+#BLUEHOUSE_URL
+BLUEHOUSE_URL='https://api.bluehouselab.com/smscenter/v1.0/sendsms'
+BLUEHOUSE_APP_ID='YOUR bluehouse lab ID'
+BLUEHOUSE_SECRET_KEY='Bluehouse secret key'
+
+
+#google facebook oauth
+try:
+    with  open('client_secret.json', 'r') as client_info:
+        CLIENT_JSON = json.loads(client_info.read())
+except:
+    CLIENT_JSON = None
+try:
+    with  open('fb_client_secret.json', 'r') as fb_info:
+        CLIENT_FB_JSON= json.loads(fb_info.read())
+except:
+    CLIENT_FB_JSON=None
+
+NAVER_CLIENT_ID ="YOUR NAVER CLIENT ID"
+NAVER_SECRET = "YOUR NAVER SECRET"
+
+#Flask Tracking
+TRACKING_EXCLUDE = [
+    '^/favicon.ico$',
+    '^/static/',
+    '^/_debug_toolbar/',
+]
+
+
+#iamport
+IAMPORT_API_KEY='IAMPORT API KEY'
+IAMPORT_SECRET_KEY='IAMPORT API SECRET'
+
+#KAKAOTALK
+KAKAO_REST_API = 'YOUR KAKAO REST API'
+
+#BANK api
+BANK_API_KEY='YOUR KFTC BANK API'
+BANK_API_SECRET='YOUR BANK SECRET'
+
+#AWS Settings
+# Amazon Web Services credentials
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+# Amazon Simple Email Service
+SES_REGION_NAME = ''  # change to match your region
+S3_REGION_NAME=''
+SES_EMAIL_SOURCE = ''
+AWS_BUCKET = ''
+AWS_CONTENT_URL = ""

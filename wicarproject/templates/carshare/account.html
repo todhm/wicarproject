@@ -1,0 +1,267 @@
+{% extends "base_temp.html" %}
+{%block style%}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='wicar_search/build/static/css/main.fe9414c2.css')}}">
+{% endblock %}
+{% block content%}
+
+    <div id="pageContainer-content">
+        <div aria-busy="false">
+            <div id="account-container" class="container">
+                <div class="section section--first u-clearFix">
+                    <div class="accordion-checkoutWrapper">
+                        <div class="accordion">
+                            {% if userCard %}
+                                <div class="layoutSingleColumn">
+                                    <hr/>
+                                    <div class="section section--withSmallMargin">
+                                        <div class="subheader">카드</div>
+                                        <div class="media media--center paymentMethodInfo">
+                                            <span class="media-item payment-creditCardIcon payment-creditCardIcon--single payment-creditCardIcon--visa"></span>
+                                            <div class="media-body paymentMethodInfo-textContainer">
+                                                <div class="text--small">{{userCard.name}}
+                                                    •••• •••• ••••
+                                                </div>
+                                                <button class="paymentMethodInfo-button button button--link button--smaller" href="#modifyCard" data-toggle="modal">카드변경</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="paymentForm-row form-line">
+                                        <div class="grid-item">
+                                            {% if cardError %}
+                                                <span class="errorMessage-text js-locationErrorText">{{cardError}}</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="layoutSingleColumn">
+                                    <hr/>
+                                    <div class="subheader">결제카드입력</div>
+                                    <div class="section section--withSmallMargin">
+                                        <div class="collapsableBody-mask accordionSection-collapsableMask" style='height: auto, transitionProperty: none'>
+                                            <div class="collapsableBody-content accordionSection-body">
+                                                {% from "_formhelpers.html" import render_custom_field %}
+                                                <form class="paymentForm" action="{{url_for('carshare_app.account_info')}}" method="POST">
+                                                    {{ cardForm.hidden_tag()}}
+                                                    <div class="paymentForm-section grid grid--smallGutter">
+                                                        <div class="paymentForm-row form-line">
+                                                            {{render_custom_field(cardForm.name,placeholder='ex)내카드',divclass='grid-item grid-item--3',showlabel=True,showerror=False)}}
+                                                            {{render_custom_field(cardForm.birth,placeholder='ex)920127',divclass='grid-item grid-item--3',showlabel=True,showerror=False)}}
+                                                        </div>
+                                                        <div class="paymentForm-row form-line">
+                                                            <div class="grid-item grid-item--8">
+                                                                <label htmlfor="">카드번호</label>
+                                                                {{render_custom_field(cardForm.card_1,placeholder='ex)1111222233334444',showlabel=False)}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="paymentForm-row form-line">
+                                                            {{render_custom_field(cardForm.expire_year,divclass='paymentForm-formField grid-item grid-item--2 grid-item--medium3 grid-item--xsmall4',showlabel=True,showerror=False)}}
+                                                            {{render_custom_field(cardForm.expire_month,divclass='paymentForm-formField grid-item grid-item--2 grid-item--medium3 grid-item--xsmall4',showlabel=True,showerror=False)}}
+                                                            {{render_custom_field(cardForm.cvc,divclass='paymentForm-formField grid-item grid-item--2 grid-item--medium3 grid-item--xsmall4',showlabel=True,showerror=False)}}
+                                                            {{render_custom_field(cardForm.password,divclass='paymentForm-formField grid-item grid-item--2 grid-item--medium3 grid-item--xsmall4',showlabel=True,showerror=False)}}
+                                                        </div>
+                                                        <div class="paymentForm-row form-line">
+                                                            <div class="grid-item">
+                                                                {% if cardError %}
+                                                                    <span class="errorMessage-text js-locationErrorText">{{cardError}}</span>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="paymentForm-section">
+                                                        <button class="button button--green" type="submit">카드등록</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if userBank %}
+                                {% from "_helpers.html" import render_account_data %}
+                                {{render_account_data("계좌","#modifyBank",userBank.user_name,userBank.to_json['bank_num'],"bank_form")}}
+                            {% else %}
+                                <div class="layoutSingleColumn">
+                                    <hr/>
+                                    <div class="subheader">계좌번호 입력</div>
+                                    <div class="section section--withSmallMargin">
+                                        <div class="collapsableBody-mask accordionSection-collapsableMask" style='height: auto, transitionProperty: none'>
+                                            <div class="collapsableBody-content accordionSection-body">
+                                                {% from "_formhelpers.html" import render_custom_field %}
+                                                <form class="paymentForm" action="{{url_for('carshare_app.add_bank')}}" method="POST">
+                                                    {{ bankForm.hidden_tag()}}
+                                                    <div class="paymentForm-section grid grid--smallGutter">
+                                                        <div class="paymentForm-row form-line">
+                                                            {{render_custom_field(bankForm.account_holder_name,placeholder='ex)홍길동',divclass='grid-item grid-item--3',showlabel=True,showerror=False)}}
+                                                            {{render_custom_field(bankForm.account_holder_info,placeholder='생년월일 앞 7자리',divclass='grid-item grid-item--3',showlabel=True,showerror=False)}}
+                                                        </div>
+                                                        <div class="paymentForm-row form-line">
+                                                            {{render_custom_field(bankForm.bank_code_std,divclass='grid-item grid-item--3',showlabel=True,showerror=False)}}
+                                                            {{render_custom_field(bankForm.account_num,placeholder='-를제외한 숫자',divclass='grid-item grid-item--3',showlabel=True,showerror=False)}}
+                                                        </div>
+                                                        <div class="paymentForm-row form-line">
+                                                            <div class="grid-item">
+                                                                {% with messages = get_flashed_messages(category_filter = ["bank_form"]) %}
+                                                                {% if messages %}
+                                                                    <span class="errorMessage-text js-locationErrorText">{{messages[0]}}</span>
+                                                                {% endif %}
+                                                                {% endwith %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="paymentForm-section">
+                                                        <button class="button button--green" type="submit">계좌등록</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if user %}
+                                {% from "_helpers.html" import render_account_data %}
+                                {{render_account_data("운전면허","#modifyUserLiscence",user.liscence_1,"","liscence_form")}}
+                            {% else %}
+                                <div class="layoutSingleColumn">
+                                    <hr/>
+                                    <div class="subheader">운전면허 등록</div>
+                                    <div class="section section--withSmallMargin">
+                                        <div class="collapsableBody-mask accordionSection-collapsableMask" style='height: auto, transitionProperty: none'>
+                                            <div class="collapsableBody-content accordionSection-body">
+                                                {% from "_formhelpers.html" import render_custom_field %}
+                                                <form class="paymentForm" action="{{url_for('carshare_app.add_user_liscence')}}" method="POST">
+                                                    {{ userLiscenceForm.hidden_tag()}}
+                                                    <div class="paymentForm-section grid grid--smallGutter">
+                                                        <div class="paymentForm-row form-line">
+                                                            {{render_custom_field(userLiscenceForm.liscence_1,divclass='paymentForm-formField grid-item grid-item--2 grid-item--medium3 grid-item--xsmall4',showlabel=True,showerror=False)}}
+                                                            {{render_custom_field(userLiscenceForm.liscence_2,divclass='paymentForm-formField grid-item grid-item--2 grid-item--medium3 grid-item--xsmall4',showlabel=False,showerror=False)}}
+                                                            {{render_custom_field(userLiscenceForm.liscence_3,divclass='paymentForm-formField grid-item grid-item--2 grid-item--medium3 grid-item--xsmall4',showlabel=False,showerror=False)}}
+                                                            {{render_custom_field(userLiscenceForm.liscence_4,divclass='paymentForm-formField grid-item grid-item--2 grid-item--medium3 grid-item--xsmall4',showlabel=False,showerror=False)}}
+                                                        </div>
+                                                        <div class="paymentForm-row form-line">
+                                                            {{render_custom_field(userLiscenceForm.birth,divclass='grid-item grid-item--3',showlabel=True,showerror=False)}}
+                                                            {{render_custom_field(userLiscenceForm.serialNumber,placeholder='오른쪽사진밑 글자',divclass='grid-item grid-item--3',showlabel=True,showerror=False)}}
+                                                        </div>
+                                                        <div class="paymentForm-row form-line">
+                                                            <div class="grid-item">
+                                                                {% with messages = get_flashed_messages(category_filter = ["liscence_form"]) %}
+                                                                {% if messages %}
+                                                                    <span class="errorMessage-text js-locationErrorText">{{messages[0]}}</span>
+                                                                {% endif %}
+                                                                {% endwith %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="paymentForm-section">
+                                                        <button class="button button--green" type="submit">면허등록</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block modal %}
+<div id="modifyCard" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="authDialog-header">카드변경</h4>
+            </div>
+            {% from "_formhelpers.html" import render_custom_field %}
+            <form class="modal-body" action="{{url_for('carshare_app.account_info')}}" method="POST">
+                <div class="container-fluid">
+                    {{ cardForm.hidden_tag()}}
+                    <div class="row">
+                        {{render_custom_field(cardForm.name,placeholder='ex)내카드',divclass='col-md-6 col-sm-6 col-xs-6',showlabel=True,showerror=False)}}
+                        {{render_custom_field(cardForm.birth,placeholder='ex)920127',divclass='col-md-6 col-s-6 col-xs-6',showlabel=True,showerror=False)}}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <label>카드번호</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {{render_custom_field(cardForm.card_1,divclass='col-sm-12 col-xs-12',placeholder='ex)1111222233334444',showlabel=False,showerror=False)}}
+                    </div>
+                    <div class="row">
+                        {{render_custom_field(cardForm.expire_year,divclass='col-md-3 col-xs-3',showlabel=True,showerror=False)}}
+                        {{render_custom_field(cardForm.expire_month,divclass='col-md-3 col-xs-3',showlabel=True,showerror=False)}}
+                        {{render_custom_field(cardForm.cvc,divclass='col-md-3 col-xs-3',showlabel=True,showerror=False)}}
+                        {{render_custom_field(cardForm.password,divclass='col-md-3 col-xs-3',showlabel=True,showerror=False)}}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-xs-3">
+                            {% if cardError %}
+                                <span class="errorMessage-text js-locationErrorText">{{cardError}}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="button button--green" type="submit">카드변경</button>
+                        <button type="button" class="button" data-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% from "_formhelpers.html" import render_bank_account_modal %}
+{{ render_bank_account_modal(bankForm) }}
+{% from "_formhelpers.html" import render_liscence_modal %}
+{{ render_liscence_modal(userLiscenceForm) }}
+{% endblock %}
+{% block script%}
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>
+    var customer_uid = {{customer_uid|tojson}};
+</script>
+<script>
+    var IMP = window.IMP; // 생략가능
+    IMP.init('imp85211648'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+    function addCard() {
+        IMP.request_pay({
+            merchant_uid: 'merchant_' + new Date().getTime(),
+            name: '최초인증결제',
+            amount: 0, // 빌링키 발급만 진행하며 결제승인을 하지 않습니다.
+            customer_uid: customer_uid, //customer_uid 파라메터가 있어야 빌링키 발급이 정상적으로 이뤄집니다.
+            buyer_email: 'iamport@siot.do',
+            buyer_name: '아임포트',
+            buyer_tel: '02-1234-1234'
+        }, function (rsp) {
+            if (rsp.success) {
+                var authObj = {};
+                authObj['customer_uid'] = customer_uid;
+                authObj['auth_token'] = customer_uid;
+                authObj['name'] = rsp.card_name;
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/register_card',
+                    processData: false,
+                    data: JSON.stringify(authObj),
+                    contentType: 'application/json',
+                    success: function (result) {
+                        // Handle or verify the server response if necessary.
+                        if (result && result['message'] == "success") {
+                            window.location.href = '/account_info';
+                        } else {
+                            alert("카드등록실패")
+
+                        }
+                    }
+                });
+            } else {
+                alert('카드등록실패');
+            }
+        });
+    }
+</script>
+{% endblock %}

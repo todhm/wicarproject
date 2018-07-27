@@ -1,0 +1,160 @@
+{% extends "base_temp.html"%}
+{% block content%}
+<div id="pageContainer-content" class=" ">
+    <!--BEGIN_CONTENT-->
+<div class="container u-contentBottomPadding u-contentTopPadding">
+    <div class="grid u-contentBottomPadding">
+        <div class="grid-item grid-item--10 grid-item--push1">
+            <div class="section">
+                <h3 class="u-alignCenter">취소환불정책</h3>
+            </div>
+            <div class="section">
+                <h3 class="h5 u-alignCenter">대여자 취소</h3>
+
+                <p>대여자는 본인의 예약페이지에서 예약을 취소할 수 있습니다. 취소 시간에 따라서 환불금액이 달라집니다.</p>
+            </div>
+            <div class="section">
+                <h6 class="text--large u-alignCenter">대여비용 &amp; 와이카 서비스 비용 환불정책</h6>
+
+                <table class="u-fullWidth">
+                    <thead>
+                    <tr>
+                        <th>취소시기</th>
+                        <th>대여비용 환불 비율</th>
+                        <th>와이카 서비스 이용료 환불</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>대여예약 후 1시간 경과 전</td>
+                        <td>100%</td>
+                        <td>100%</td>
+                    </tr>
+                    <tr>
+                        <td>대여시작 >7일 이전 취소</td>
+                        <td>100%</td>
+                        <td>0%</td>
+                    </tr>
+                    <tr>
+                        <td>대여시작 1–7일 이전 취소</td>
+                        <td>90%</td>
+                        <td>0%</td>
+                    </tr>
+                    <tr>
+                        <td>대여시작 24시간 이전 취소</td>
+                        <td>0%</td>
+                        <td>0%</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p></p>
+                <p>차주가 예약확인을 진행한지 1시간이 지나면 와이카 서비스비용을 환불해 드릴 수 없습니다.</p>
+            </div>
+            <div class="section">
+                <h3 class="h5 u-alignCenter">차주측 취소</h3>
+                <table class="u-fullWidth">
+                    <thead>
+                    <tr>
+                        <th>취소시기</th>
+                        <th>대여비용 환불 비율</th>
+                        <th>와이카 서비스 이용료 환불</th>
+                        <th>차주측 페널티</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>대여시작 1일 이전</td>
+                        <td>100%</td>
+                        <td>100%</td>
+                        <td>3만원</td>
+                    </tr>
+                    <tr>
+                        <td>대여시작 24시간 이전 취소</td>
+                        <td>100%</td>
+                        <td>100%</td>
+                        <td>5만원</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p>주의사항: 반복된 차주측의 딜리버리 취소는 공유시장에서의 차량공유불가조치를 포함한  추가적인 패널티가 적용될 수 있습니다.</p>
+            </div>
+            <div class="section">
+                <h3 class="h5 u-alignCenter">천재,지변으로 인한 취소 혹은 비행기, 기차, 버스 연착으로 인한 취소</h3>
+                <table class="u-fullWidth">
+                    <thead>
+                    <tr>
+                        <th>취소시기</th>
+                        <th>대여비용 환불 비율</th>
+                        <th>와이카 서비스 이용료 환불</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>대여시작 무관</td>
+                        <td>100%</td>
+                        <td>100%</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p>주의사항: 천재, 지변이나 비행기, 기차, 버스의 연착으로 인한 취소는 대여시간 시작 후 24시간 이내에 증빙서류 (사진, 티켓) 를 제출해주셔야합니다.</p>
+            </div>
+            <div class="section">
+                <h3 class="u-alignCenter">와이카 페널티 정책</h3>
+            </div>
+            <div class="section">
+                <h3 class="h5 u-alignCenter">대여자측 페널티</h3>
+                <table class="u-fullWidth">
+                    <thead>
+                    <tr>
+                        <th>패널티 항목</th>
+                        <th>벌금 내용</th>
+                        <th>차주 보상범위</th>
+                        <th>와이카수수료</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>정해진 주행거리 외의 추가거리 운행</td>
+                        <td>km당 700원 (최대 30만원) <a href="{{url_for('carterms_app.distance_policy')}}">*주행거리 정책을</a> 참조해주세요</td>
+                        <td>85%</td>
+                        <td>15%</td>
+                    </tr>
+                    <tr>
+                        <td>반납지연</td>
+                        <td>시간당 5만원, 최대 20만원. <a href="{{url_for('carterms_app.latency_policy')}}">*반납 지연 정책을</a> 참조해주세요</td>
+                        <td>85%</td>
+                        <td>15%</td>
+                    </tr>
+                    <tr>
+                        <td>연료보충</td>
+                        <td>대여시작시의 연료량/배터리량(전기차) 까지 필요한 비용</td>
+                        <td>차주 100%</td>
+                        <td>2만원</td>
+                    </tr>
+                    <tr>
+                        <td>통행료</td>
+                        <td>통행료 미납</td>
+                        <td>차주 100%</td>
+                        <td>1만원</td>
+                    </tr>
+                    <tr>
+                        <td>교통법규 위반</td>
+                        <td>과속/신호위반 단속 카메라</td>
+                        <td>차주 100%</td>
+                        <td>1만원</td>
+                    </tr>
+                    <tr>
+                        <td>청소비, 애완동물, 흡연비용</td>
+                        <td>오염의 정도에 따라 3만원, 5만원, 10만원,15만원 혹은 25만원. <a href="{{url_for('carterms_app.cleaning_policy')}}">*청소정책을</a> 참조해주세요</td>
+                        <td>차주 100%</td>
+                        <td>2만원</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+    <!--CONTENT-->
+</div>
+{% endblock %}

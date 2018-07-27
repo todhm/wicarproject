@@ -1,0 +1,62 @@
+{% extends "base_temp.html"%}
+{% block style%}
+<link rel="stylesheet" type="text/css" href={{ url_for('static',filename='css/carupload/styles.a92b76dabd05f7aaec98dfd845b162fe.css',version='1.11')}} >
+{% endblock %}
+{% block content%}
+<div id="pageContainer-content">
+    <div>
+        {% from "_helpers.html" import render_dashboard_header %}
+        {{render_dashboard_header('owner_review')}}
+    </div>
+    <div>
+    <div class="pageContainer pageContainer--fluid">
+        <div class="pageContainer">
+            <div aria-busy="false">
+                <div class="pageContainer reviewsView">
+                    <div class="row gutter--4 u-alignItemsCenter" style="min-height: 60px;">
+                        <div class="col col--md6"><h1 class="reviewsFiltersDesktopForm-title">고객님의 서비스를 이용한 사용자들의 리뷰입니다.</h1></div>
+                        <div class="col u-textAlignRight col--md3"><div class="dropdown"></div></div>
+                        <div class="col col--md3"><div class="dropdown dropdown--fullWidth"></div></div>
+                        <div class="row gutter--4 u-marginTop1">
+                            <div class="col col--12 col--sm12 col--md9">
+                                <div class="reviewsHeader reviewsHeader--withMargin">사용리뷰</div>
+                                <div class="reviewList">
+                                    {% for owner_review in  ownerReviewList %}
+                                    <div class="reviewList-review">
+                                        <div class="review review--withRating">
+                                            <div class="media">
+                                                <a href="#" class="media-item">
+                                                    <div>
+                                                        <img alt="{{owner_review.booking.renter.name}}" class="profilePhoto profilePhoto--large profilePhoto--round profilePhoto--placeholderWithBorder" src="{{owner_review.booking.renter.imgsrc}}">
+                                                    </div>
+                                                </a>
+                                                <div class="media-body review-body">
+                                                    <div class="starRating review-rating">
+                                                        <div class="starRating-rating starRating-rating--large starRating-rating--purple">
+                                                            {% for i in range(owner_review.review_point|int)%}
+                                                                <span class="starRating-star starRating-star--filled"></span>
+                                                            {% endfor %}
+                                                            {% if owner_review.review_point >  owner_review.review_point|int %}
+                                                                <span class="starRating-star starRating-star--halfFilled"></span>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="review-vehicle">{{owner_review.booking.car.class_name}}</div>
+                                                    <p class="review-message">{{owner_review.review}}</p>
+                                                    <p class="review-authorAndDate"><a class="review-author" href="#">{{owner_review.booking.renter.name}}</a><span class="review-authorDateSpacer">-</span><span class="review-date">{{owner_review.register_date.strftime('%Y-%m-%d %H:%m')}}</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "base_temp.html"%}
+{% block style%}
+<style>
+.nav-tabs{
+    float:left;
+    border-bottom: 1px solid #ddd;
+    width:100%;
+    margin-bottom:10px;
+
+}
+h3{
+    font-size:24px;
+}
+.content-wrap{
+    padding-top: 50px;
+}
+.content {
+    font-family: 'Noto Sans Korean', sans-serif;
+    color: #aaa;
+    font-size: 13px;
+    width: 960px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 30px 60px;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+}
+.content-wrap h3{
+    font-family: 'Noto Sans Korean', sans-serif;
+    color: #777;
+    margin: 30px 0;
+}
+@media all and (min-width: 768px) and (max-width: 1023px) {
+    .content {
+        width: 750px;
+        padding: 15px 30px;
+    }
+    .content-wrap h3{
+        margin: 20px 0;
+        font-size: 20px;
+    }
+}
+@media all and (max-width: 767px) {
+    .content {
+        width: 94%;
+        margin: 20px auto;
+        padding: 10px 1%;
+        border-radius: 5px;
+    }
+    .content-wrap h3{
+        margin: 20px 0;
+        font-size: 20px;
+    }
+    #agreement,#privacy,#location{
+        padding: 0 10px;
+    }
+    .nav-tabs>li>a {
+        padding: 5px 3px;
+        font-size: 10px;
+    }
+}
+</style>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/carterms/element.css')}}" >
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/carterms/policy.css')}}" >
+
+{% endblock%}
+{% block content %}
+<div class="content-wrap">
+    <div class="content" >
+        <ul class="nav nav-tabs">
+            {% if term_service =="active"%}
+                <li role="presentation" id="term-service" class="{{term_service}}"><a href="#">서비스 이용약관</a></li>
+            {% else %}
+                <li role="presentation" id="term-service" class="{{term_service}}"><a href="{{url_for('carterms_app.term_service')}}">서비스 이용약관</a></li>
+            {% endif %}
+            {% if privacy =="active"%}
+                <li role="presentation" id="privacy" class="{{privacy}}"><a href="#">개인정보 취급 방침</a></li>
+            {% else %}
+                <li role="presentation" id="privacy" class="{{privacy}}"><a href="{{url_for('carterms_app.privacy')}}">개인정보 취급 방침</a></li>
+            {% endif %}
+            {% if term_location =="active"%}
+                <li role="presentation" id="term-location" class="{{term_location}}"><a href="#">위치기반 서비스 이용약관</a></li>
+            {% else %}
+                <li role="presentation" id="term-location" class="{{term_location}}"><a href="{{url_for('carterms_app.term_location')}}">위치기반 서비스 이용약관</a></li>
+            {% endif %}
+        </ul>
+        <div id="agreement" class="exp agreement_on on">
+            <h3>
+{% block agreement_title%}
+{% endblock %}
+            </h3>
+            <div style="white-space: pre-wrap">
+{%block agreement%}
+{% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

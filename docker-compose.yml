@@ -1,0 +1,154 @@
+version: '3.6'
+
+services:
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - wicarwebapp
+    networks:
+      - frontend
+      - backend
+
+  wicarwebapp:
+    container_name: wicarwebapp
+    image: todhm/wicarwebapp
+    build:
+      context: ./wicarproject
+    working_dir: /usr/src/app
+    command: gunicorn -b 0.0.0.0:8000 -w 4  wsgi:app
+    networks:
+        - backend
+    depends_on:
+      - postgres
+      - redis
+      - mongo
+    environment:
+      - FLASK_DEBUG=1
+    volumes:
+        - ./wicarproject:/usr/src/app
+    ports:
+        - "8000:8000"
+
+  celery_worker:
+    container_name: celery_worker
+    image: todhm/wicarwebapp
+    working_dir: /usr/src/app
+    command: celery -A celery_worker:celery worker  --loglevel=INFO
+    networks:
+        - backend
+    ports:
+      - "9000:9000"
+    depends_on:
+      - wicarwebapp
+      - postgres
+      - redis
+      - mongo
+
+  celery_beat:
+    container_name: celery_beat
+    image: todhm/wicarwebapp
+    working_dir: /usr/src/app
+    command: celery -A celery_worker:celery beat  --loglevel=INFO
+    networks:
+        - backend
+    ports:
+      - "9050:9050"
+    depends_on:
+      - wicarwebapp
+      - postgres
+      - redis
+      - mongo
+      - celery_worker
+
+  postgres:
+    image: wicarpostgres
+    volumes:
+        - db-data:/var/lib/postgresql/data
+        - ./postgres/restore.sh:/docker-entrypoint-initdb.d/restore.sh
+        - ./postgres/db.dump:/docker-entrypoint-initdb.d/db.dump
+    ports:
+      - 5432:5432
+    networks:
+        - backend
+    environment:
+      - POSTGRES_USER=jordan
+      - POSTGRES_PASSWORD=test1234
+      - POSTGRES_DB=test
+
+  redis:
+    image: redis:alpine
+    networks:
+        - backend
+    ports:
+      - 6379:6379
+      
+  mongo:
+    container_name: mongo
+    image: mongo:3.4
+    restart: always
+    volumes:
+      - mdb-data:/data/db
+      - ./mongo/carData:/docker-entrypoint-initdb.d/carData
+      - ./mongo/restore.sh:/docker-entrypoint-initdb.d/restore.sh
+    networks:
+      - backend
+
+  wicaradmin:
+    container_name: wicaradmin_client
+    build:
+      context: ./wicaradminfront
+      dockerfile: Dockerfile-dev
+      args:
+        - NODE_ENV=development
+    image: todhm/adminfront:latest
+    volumes:
+        - ./wicaradminfront:/opt/app:delegated
+        - ./wicaradminfront/package.json:/opt/package.json
+        - ./wicaradminfront/package-lock.json:/opt/package-lock.json
+        - frontend-node-modules:/opt/app/node_modules
+    ports:
+        - "3000:3000"
+
+    networks:
+    - admin-frontend
+    - backend
+    environment:
+        - NODE_ENV=development
+        - REACT_APP_USERS_SERVICE_URL=http://wicaradminback:5000
+        - CHOKIDAR_USEPOLLING=true
+        - GENERATE_SOURCEMAP=false
+
+  wicaradminback:
+    container_name: wicaradminback
+    image: todhm/wicarwebapp
+    working_dir: /usr/src/app
+    command: gunicorn -b 0.0.0.0:5000 -w 4  admin_wsgi:app
+    networks:
+        - backend
+    depends_on:
+      - postgres
+      - redis
+      - mongo
+    environment:
+      - FLASK_DEBUG=1
+    volumes:
+        - ./wicarproject:/usr/src/app
+    ports:
+        - "5000:5000"
+
+
+volumes:
+  frontend-node-modules:
+  db-data:
+  mdb-data:
+
+networks:
+    backend:
+    frontend:
+    admin-frontend:

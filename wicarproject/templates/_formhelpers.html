@@ -1,0 +1,260 @@
+{% macro render_field(field) %}
+    <div class="form-group">
+        {{ field.label}}
+        {{ field(**kwargs)|safe }}
+        {% if field.errors %}
+            <ul class="text-danger">
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro render_custom_field(field, divclass, showerror = True, showlabel = True) %}
+    <div class="{{divclass}}">
+        {% if showlabel %}
+            {{ field.label}}
+        {% endif %}
+        {{ field(**kwargs)|safe }}
+        {% if showerror %}
+            {% if field.errors %}
+                <ul class="text-danger">
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro render_placeholder_field(field, placeholder, secondplaceholder, showerror = True, showlabel = True) %}
+    <div>
+        <div class="holder">
+            {{placeholder}}
+            <span class="secondplaceholder">{{secondplaceholder}}</span>
+        </div>
+        {{ field(**kwargs)|safe }}
+        {% if showerror %}
+            {% if field.errors %}
+                <ul class="text-danger">
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro render_searchForm(form, page = '/') %}
+    {%if page=='/'%}
+        <form method="POST" class="searchFormExpanded" id="js-searchFormExpanded" action="{{page}}">
+            {% else%}
+            <form method="POST" class="searchFormExpanded fixed-search" id="js-searchFormExpanded" action="{{page}}">
+            {% endif %}
+            {{form.hidden_tag()}}
+            <div class="container-fluid">
+                <div class="col-xs-12 col-sm-5 searchFormExpanded-elementContainer searchFormExpanded-elementContainer--location" id="js-searchFormExpandedLocationInputContainer">
+                    <label class="searchFormExpanded-label">장소
+                        {% if form.address.errors %}
+                            {% for error in form.address.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </label>
+                    {% if form.address.data %}
+                        <input type="text" id="js-searchFormExpandedLocationInput" class="searchFormExpanded-locationInput u-darkerPlaceholder u-truncate ui-autocomplete-input" value="{{form.address.data}}" placeholder="주소나 지명을 입력해주세요">
+                    {% else %}
+                        <input type="text" id="js-searchFormExpandedLocationInput" class="searchFormExpanded-locationInput u-darkerPlaceholder u-truncate ui-autocomplete-input" placeholder="주소나 지명을 입력해주세요.">
+                    {% endif %}
+                    <!-- Values modified by autocomplete callback -->
+                </div>
+                <div class="col-xs-12 col-sm-3  searchFormExpanded-elementContainer">
+                    <label class="searchFormExpanded-label">시작일
+                        {% if form.startDate.errors %}
+                            {% for error in form.startDate.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </label>
+                    <div class="searchFormExpanded-dateTimeContainer">
+                        <div class="searchFormExpanded-dateTimeItem">
+                            <input class="searchFormExpanded-date dateTimePicker-date" value="{{form.startDate.value}}" id="js-searchFormExpandedStartDate" name="startDate" onfocus="this.blur()" placeholder="Any day" readonly="true" size="10" type="text">
+                        </div>
+                        <div class="searchFormExpanded-dateTimeItem">
+                            <span class="searchFormExpanded-time">
+                                {{ form.startTime(class='none-border-select',id='noneborder-start')|safe }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3 searchFormExpanded-elementContainer">
+                    <label class="searchFormExpanded-label">종료일
+                    </label>
+                    <div class="searchFormExpanded-dateTimeContainer">
+                        <div class="searchFormExpanded-dateTimeItem">
+                            <input class="searchFormExpanded-date dateTimePicker-date" value="{{form.endDate.value}}" id="js-searchFormExpandedEndDate" name="endDate" onfocus="this.blur()" placeholder="Any day" readonly="true" size="10" type="text">
+                        </div>
+                        <div class="searchFormExpanded-dateTimeItem">
+                            <span class="searchFormExpanded-time">
+                                {{ form.endTime(class='none-border-select',id='noneborder-end')|safe }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-1">
+                    <button class="button  searchFormExpanded-button">Search</button>
+                </div>
+            </div>
+        </form>
+    {% endmacro %}
+
+    {% macro render_star(field) %}
+        <div class="form-group">
+            <input id="{{field.name}}" name="{{field.name}}" value="{{field.data}}" class="rating-loading star_rating">
+            {% if field.errors %}
+                <ul class="text-danger">
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    {% endmacro %}
+
+    {% macro render_comment(field)%}
+        <div class="form-group">
+            <div class="l-media">
+                <div class="l-media__body">
+                    <div class="vjs-comment-list">
+                        {{ field(**kwargs)|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if field.errors %}
+            <ul class="text-danger">
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endmacro %}
+
+    {% macro render_purple_star(rate)%}
+        <div class="starRating-rating starRating-rating--large starRating-rating--purple">
+            {% for i in range(rate|int)%}
+                <span class="starRating-star starRating-star--filled"></span>
+            {% endfor %}
+            {% if rate > rate | int %}
+                <span class="starRating-star starRating-star--halfFilled"></span>
+            {% endif %}
+        </div>
+    {% endmacro %}
+
+    {% macro render_pagination(products)%}
+        {% set view_args = request.view_args %}
+        {% do 
+            view_args.pop('page') %}
+        <ul class="pagination">
+            <li class="previous">
+                {% if products.has_prev %}
+                    <a href="{{url_for(request.endpoint, page=products.prev_num, **view_args)}}">&lt;&lt; Prev</a>
+                {% else %}
+                    <a href="#">&lt;&lt;Prev{% endif %}
+                </a>
+            </li>
+            {%- for page in products.iter_pages(right_current=9,right_edge=3,left_edge=3,left_current=0) %}
+                {% if page %}
+                    {% if page != products.page %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for(request.endpoint,page=page, **view_args) }}">{{ page }}</a>
+                        </li>
+                    {% else %}
+                        <li class="active">
+                            <a>{{ page }}</a>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <li class="disabled"></li>
+                {% endif %}
+            {%- endfor %}
+            <li class="next">
+                {% if products.has_next %}
+                    <a href="{{url_for(request.endpoint,page=products.next_num,**view_args)}}">Next &gt;&gt;</a>
+                {% else %}
+                    <a href="#">Next &gt;&gt;</a>
+                {% endif %}
+            </li>
+        </ul>
+    {% endmacro %}
+
+    {% macro render_bank_account_modal(bankForm) %}
+        <div id="modifyBank" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="authDialog-header">계좌변경</h4>
+                    </div>
+                    {% from "_formhelpers.html" import render_custom_field %}
+                    <form action="{{url_for('carshare_app.add_bank')}}" method="POST">
+                        {{ bankForm.hidden_tag()}}
+                        <div class="modal-body container-fluid">
+                            <div class="row">
+                                {{render_custom_field(bankForm.account_holder_name,placeholder='ex)홍길동',divclass='col-md-6',showlabel=True,showerror=False)}}
+                                {{render_custom_field(bankForm.account_holder_info,placeholder='생년월일 앞 7자리 혹은 사업자등록번호',divclass='col-md-6',showlabel=True,showerror=False)}}
+                            </div>
+                            <div class="row">
+                                {{render_custom_field(bankForm.bank_code_std,divclass='col-md-6',showlabel=True,showerror=False)}}
+                                {{render_custom_field(bankForm.account_num,placeholder='-를제외한 숫자',divclass='col-md-6',showlabel=True,showerror=False)}}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="button button--green" type="submit">계좌변경</button>
+                            <button type="button" class="button" data-dismiss="modal">취소</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% endmacro %}
+    {% macro render_liscence_modal(userLiscenceForm) %}
+        <div id="modifyUserLiscence" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="authDialog-header">면허변경</h4>
+                    </div>
+                    {% from "_formhelpers.html" import render_custom_field %}
+                    <form action="{{url_for('carshare_app.add_user_liscence')}}" method="POST">
+                        {{ userLiscenceForm.hidden_tag()}}
+                        <div class="modal-body container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 col-xs-6">
+                                    <label>운전면허번호</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                {{render_custom_field(userLiscenceForm.liscence_1,divclass='col-xs-3',showlabel=False,showerror=False)}}
+                                {{render_custom_field(userLiscenceForm.liscence_2,divclass='col-xs-3',showlabel=False,showerror=False)}}
+                                {{render_custom_field(userLiscenceForm.liscence_3,divclass='col-xs-3',showlabel=False,showerror=False)}}
+                                {{render_custom_field(userLiscenceForm.liscence_4,divclass='col-xs-3',showlabel=False,showerror=False)}}
+
+                            </div>
+                            <div class="row">
+                                {{render_custom_field(userLiscenceForm.birth,divclass='col-md-6',showlabel=True,showerror=False)}}
+                                {{render_custom_field(userLiscenceForm.serialNumber,divclass='col-md-6',showlabel=True,showerror=False)}}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="button button--green" type="submit">면허변경</button>
+                            <button type="button" class="button" data-dismiss="modal">취소</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% endmacro %}

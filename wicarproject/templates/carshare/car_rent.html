@@ -1,0 +1,106 @@
+{% extends "base_temp.html"%}
+{% block content %}
+<div class="container container--fluid container--darkBackground interstitial interstitial--driving u-table">
+    <div class="container u-alignCenter u-tableCell u-verticalAlignMiddle">
+        <div class="marginBottom--20">
+            <h1 class="hero herotitle">
+                <span class="herotitle-subtitle">Wi-CAR와 함께</span>
+                <span class="herotitle-title">당신이 필요한</span>
+                <p>자동차를 찾아보세요 </p>
+            </h1>
+        </div>
+
+        <div class="buttonWrapper buttonWrapper--largestTopMargin">
+            <a class="button button--green button--large" href="{{url_for('carbooking_app.car_search')}}">자동차 빌리러 가기</a>
+        </div>
+        {% from "_helpers.html" import render_btn %}
+        {{ render_btn('renter')}}
+    </div>
+</div>
+
+<div class="container container--fluid interstitial u-table">
+    <div class="container u-alignCenter u-tableCell">
+
+        <h2 class="h2">Wi-CAR는 왜 특별하나요?</h2>
+
+        <div class="auxiliaryPlus auxiliaryPlus--wide">
+            <span class="auxiliaryPlus auxiliaryPlus--first text--green">+</span>
+            <span class="auxiliaryPlus auxiliaryPlus--second text--green">+</span>
+        </div>
+        <div class="grid">
+            <div class="grid-item grid-item--4">
+                <h4 class="text--green">선택</h4>
+
+                <p>시간,브랜드, 모델, 장소 당신은 모든 것을 선택할 수 있습니다.</p>
+                <span class="auxiliaryPlus auxiliaryPlus--narrow text--green">+</span>
+            </div>
+            <div class="grid-item grid-item--4">
+                <h4 class="text--green">가격</h4>
+
+                <p>기존 렌터카의 관리비용(주차,유지,감가)이 없는 Wi-CAR 에서는 합리적인 가격으로 자동차를 대여할 수 있습니다.</p>
+                <span class="auxiliaryPlus auxiliaryPlus--narrow text--green">+</span>
+            </div>
+            <div class="grid-item grid-item--4">
+                <h4 class="text--green">접근성</h4>
+
+                <p>언제 어디서나 가능합니다</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container container--fluid container--noPadding container--greenLightBackground interstitial">
+    <div class="container u-alignCenter numberedSteps numberedSteps-background">
+        <h3>How it works</h3>
+        <div class="numberedSteps-foreground">
+            <div class="numberedSteps-blurb numberedSteps-step--1">
+                <span class="supertitle">여러분께 딱맞는 자동차 찾기</span>
+                <p class="numberedSteps-explanation">여러분이 원하는 장소에서 여러분이 원하는 브랜드의 자동차를 찾아보세요</p>
+            </div>
+            <div class="numberedSteps-blurb numberedSteps-step--2">
+                <span class="supertitle">예약하기</span>
+                <p class="numberedSteps-explanation">원하는 시간대에 가능한 자동차를 찾았다면 대여요청을 하세요. 협력사들이 최대한 신속히 요청에 응답해드릴겁니다</p>
+            </div>
+            <div class="numberedSteps-blurb numberedSteps-step--3">
+                <span class="supertitle">Wi-CAR하기</span>
+                <p class="numberedSteps-explanation">자동차를 건네받고 행복한 여행을 하세요 </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container container--fluid interstitial interstitial--group">
+    <div class="container u-alignCenter u-verticalAlignMiddle">
+        <div class="slidingDrawer  slidingDrawer--smallImage is-expanded js-searchFormHeadingSlidingDrawer">
+            <h3 class="text--white">Wi-CAR할 준비 되셨나요?</h3>
+        </div>
+        <!-- Referred by _search_form_collapsed_js -->
+        <div class="searchFormSlidingDrawer js-searchFormSlidingDrawer interstitial-searchForm">
+            <form id="js-searchFormExpanded" method="POST" class="searchForm js-searchForm" action="{{url_for('carshare_app.homepage')}}"  autocomplete="off">
+                <div class="searchForm-line js-searchFormLocationLine searchForm-searchInput">
+                    <span class="searchForm-icon js-searchFormIcon"></span>
+                    <span class="searchForm-label is-hidden js-searchFormLocationLabel">자동차검색</span>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <input id="address" name="address" type="hidden" value="">
+                    <input id="pointX" name="pointX" type="hidden" value="">
+                    <input id="pointY" name="pointY" type="hidden" value="">
+                    <input  id="js-searchFormExpandedLocationInput" class="searchForm-input js-searchFormLocationInput u-darkerPlaceholder" type="text" size="23" name="location" placeholder="장소를 검색하세요" autocomplete="off">
+                </div>
+                <div class="searchForm-buttonWrapper">
+                    <button  class="button button--green searchForm-button"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
+{% block script%}
+<script type="text/javascript">
+    var queryUrl = {{url_for('carupload_api_app.return_address')|tojson}};
+</script>
+<script src="{{ url_for('static',filename='js/carbooking/searchform.js',version='1.66' )}}"></script>
+{% endblock %}

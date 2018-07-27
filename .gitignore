@@ -1,0 +1,47 @@
+*.py[co]
+*.DS_*
+# Packages
+*.egg
+*.egg-info
+dist
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+
+#Translations
+*.mo
+
+#Mr Developer
+venv
+*.pyc
+bower_components
+node_modules
+logs
+
+#Settings File
+settings.py
+start_server.sh
+desktop.ini
+client_secret.json
+fb_client_secret.json
+
+#Celery schedule file
+celerybeat-schedule
+celerybeat.pid
+
+static/wicar_react/build/*
+!static/wicar_react/build/static/
+static/wicar_react/build/static/media
+!static/wicar_react/build/static/css/
+!static/wicar_react/build/static/js/

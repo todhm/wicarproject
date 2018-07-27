@@ -1,0 +1,72 @@
+{% extends "base_temp.html"%}
+
+{% block style %}
+<style type="text/css">
+input:-webkit-autofill{
+    background-color: #FAFFBD !important;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-modal-dialog">
+    <div class="container-fluid">
+        <h4 class="login-dialog-header">로그인</h4>
+        <div class="row btn-login-modal">
+            <div class="col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                <fb:login-button   data-width="100%" data-max-rows="1" data-size="medium" data-button-type="login_with"  data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"  scope="public_profile,email" onlogin="sendTokenToServer();">
+                       <a  class="button button--facebook button--large button--fluid" tabindex="1" href='javascript:sendTokenToServer()'>Facebook 로그인 &nbsp; &nbsp;</a>
+               </fb:login-button>
+           </div>
+        </div>
+        <div class="row btn-login-modal">
+           <div  class = "googleSigninButton col-md-8 col-sm-6 col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+              <span  class="logingoogle signinButton g-signin button--fluid"
+                data-scope="openid email profile"
+                data-clientid="151174455480-8mn38v751rfa0bol88hm2adpd4a0jvrs.apps.googleusercontent.com"
+                data-redirecturi="postmessage"
+                data-accesstype="offline"
+                data-cookiepolicy="single_host_origin"
+                data-callback="signInCallback"
+                data-approvalprompt="force">
+                <img class="google-mark" src='/static/images/googlemark.png' />
+                Google 로그인
+              </span>
+            </div>
+         </div>
+         <div class="row btn-login-modal">
+             <div  class = "googleSigninButton col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                 <a id="custom-login-btn" href="javascript:loginWithKakao()">
+                     <img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="100%"/>
+                 </a>
+             </div>
+         </div>
+         <div class="row btn-login-modal">
+             <div class="col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3 waitingResult">
+             </div>
+         </div>
+         <div class="row btn-login-or">
+             <div  class = "googleSigninButton col-md-8 col-sm-6   col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                 <p class="or-line"><span class="modal-or-signin">or</span></p>
+           </div>
+        </div>
+        <div class="row btn-login-modal">
+            <div class="col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                {% from "_formhelpers.html" import render_custom_field %}
+                <form method="POST" action="{{ url_for('carshare_app.login_page')}}"  class="form-signin" role="form" autocomplete="off">
+                  {{ form.hidden_tag() }}
+                  {{ render_custom_field(form.email, showlabel=False,class='form-control login-modal',placeholder='Email') }}
+                  {{ render_custom_field(form.password,showlabel=False,class='form-control login-modal',placeholder="Password") }}
+                  <button class="dialog-link button button--fluid login-modal-button form-control  btn-login-or" type="submit" data-dialog-class="no-titlebar">로그인하기</button>
+              </form>
+                {% include '_flashmessages.html' %}
+            </div>
+        </div>
+        <div class="row btn-login-modal">
+           <div class="col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+               <a  class="dialog-link button button--fluid signup-modal-button" data-dialog-class="no-titlebar" href="{{url_for('carshare_app.signup_page')}}">회원가입하기</a></span>
+           </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

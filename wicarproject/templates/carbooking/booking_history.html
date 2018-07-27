@@ -1,0 +1,82 @@
+{% extends "base_temp.html"%}
+{% block style%}
+<link rel="stylesheet" type="text/css" href={{ url_for('static',filename='css/carupload/styles.a92b76dabd05f7aaec98dfd845b162fe.css',version='1.11')}} >
+{% endblock %}
+{% block content%}
+
+<div id="pageContainer-content">
+    <div class="pageContainer u-contentBottomPadding pageContainer--centered" style="min-height: 540px; max-width: 700px;">
+        <div aria-busy="false">
+            <div class="u-noMarginSmallScreenAndBelow u-marginTopLargest">
+                <div class="pendingRequests">
+                    <div class="dashboardActivityFeed dashboardActivityFeed--pendingRequests">
+                        {% if bookingOwnerList %}
+                        <div class="dashboardActivityFeed-divider dashboardActivityFeed-divider--pendingRequests u-alignCenter">
+                            <h6 class="dashboardActivityFeed-dividerText">완료된 서비스내역</h6>
+                        </div>
+                        {% for booking in bookingOwnerList %}
+                        <div class="dashboardActivityFeed-item">
+                            <a class="dashboardActivityFeed-link" href="{{url_for('carbooking_app.reservation_page',booking_id=booking.id)}}">
+                                <div class="dashboardActivityFeed-details">
+                                    <div class="dashboardActivityFeed--profilePhoto">
+                                        <div>
+                                        </div>
+                                    </div>
+                                    <div class="dashboardActivityFeed-summary">
+                                        <p class="dashboardActivityFeed-message u-noMargin">{{booking.renter.name}}님에게 {{booking.car.class_name}}을 대여해줬습니다.</p>
+                                    </div>
+                                    <div class="dashboardActivityFeed-vehicle">
+                                        <img alt="Vehicle image" class="vehicleImage vehicleImage--medium vehicleImage--roundedCorners" src="{{booking.imgsrc}}">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="dashboardActivityFeed-divider dashboardActivityFeed-divider--pendingRequests u-alignCenter">
+                            <h6 class="dashboardActivityFeed-dividerText">차량 서비스 내역이 없습니다</h6>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="pendingRequests">
+                    <div class="dashboardActivityFeed dashboardActivityFeed--pendingRequests">
+                        {% if bookingRenterList %}
+                        <div class="dashboardActivityFeed-divider dashboardActivityFeed-divider--pendingRequests u-alignCenter">
+                            <h6 class="dashboardActivityFeed-dividerText">완료된 차량대여내역</h6>
+                        </div>
+                        {% for booking in bookingRenterList %}
+                        <div class="dashboardActivityFeed-item">
+                            <a class="dashboardActivityFeed-link" href="{{url_for('carbooking_app.reservation_page',booking_id=booking.id)}}">
+                                <div class="dashboardActivityFeed-details">
+                                    <div class="dashboardActivityFeed--profilePhoto">
+                                        <div>
+                                        </div>
+                                    </div>
+                                    <div class="dashboardActivityFeed-summary">
+                                        <p class="dashboardActivityFeed-message u-noMargin">{{booking.car.user.name}}님에게 {{booking.car.class_name}}을 대여헀습니다.</p>
+                                    </div>
+                                    <div class="dashboardActivityFeed-vehicle">
+                                        <img alt="Vehicle image" class="vehicleImage vehicleImage--medium vehicleImage--roundedCorners" src="{{booking.imgsrc}}">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="dashboardActivityFeed-divider dashboardActivityFeed-divider--pendingRequests u-alignCenter">
+                            <h6 class="dashboardActivityFeed-dividerText">차량 대여 내역이 없습니다</h6>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}

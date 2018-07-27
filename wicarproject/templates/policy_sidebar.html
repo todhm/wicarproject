@@ -1,0 +1,47 @@
+{% extends "base_temp.html"%}
+{% block style%}
+<link rel="stylesheet" type="text/css" href={{ url_for('static',filename='css/carterms/term.css')}} >
+{% endblock %}
+{% block content%}
+<main role="main">
+  <div class="container">
+    <div class="article-container" id="article-container">
+        {% block article %}
+        {% endblock %}
+        <section class="article-sidebar">
+          <section class="section-articles collapsible-sidebar">
+            <h4 class="collapsible-sidebar-title sidenav-title">와이카 정책</h4>
+            <ul>
+                <li>
+                  <a href="{{url_for('carterms_app.cancellation')}}" class="sidenav-item ">취소환불정책</a>
+                </li>
+                <li>
+                  <a href="{{url_for('carterms_app.distance_policy')}}" class="sidenav-item ">거리정책</a>
+                </li>
+                <li>
+                  <a href="{{url_for('carterms_app.cleaning_policy')}}" class="sidenav-item">청소정책</a>
+                </li>
+                <li>
+                  <a href="{{url_for('carterms_app.latency_policy')}}"  class="sidenav-item ">반납지연정책</a>
+                </li>
+            </ul>
+          </section>
+        </section>
+      </div>
+  </div>
+</main>
+{% endblock %}
+{% block script%}
+<script>
+$(function () {
+    $('.collapsible-sidebar').after().on('click', function (e) {
+        var menuItem = $( e.currentTarget );
+        if (menuItem.attr( 'aria-expanded') === 'true') {
+            $(this).attr( 'aria-expanded', 'false');
+        } else {
+            $(this).attr( 'aria-expanded', 'true');
+        }
+    });
+});
+</script>
+{% endblock%}

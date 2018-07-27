@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-120280604-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-120280604-1');
+        </script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="{{url_for('static',filename='css/base.css')}}">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css">
+        <!-- Color the status bar on mobile devices -->
+        <meta name="theme-color" content="#231F20">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/carshare/base_temp.css',version='1.492')}}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/carshare/modal.css')}}">
+        <title>여행은 와이카와 함께| Wi-Car</title>
+        <!--BEGIN_HEAD-->
+
+        <style type="text/css">
+            .header .searchBar {
+                display: none !important;
+            }
+            .nav-item--search {
+                display: none !important;
+            }
+            .subNavList-item--search {
+                display: block !important;
+            }
+        </style>
+        {% block style %}{% endblock%}
+            {%block index%}{% endblock %}
+            <script src="//apis.google.com/js/platform.js?onload=start"></script>
+            <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+            <script type="text/javascript" src="//connect.facebook.net/ko_KR/sdk.js"></script>
+        </head>
+        <body data-gr-c-s-loaded="true">
+            <!--nav file -->
+            <header class="header container container--fluid js-header ">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-3 col-md-1 col-lg-1">
+                            <a href="{{url_for('carshare_app.homepage')}}" class="header-logo">
+                                <img src="/static/images/wicarlogoblack.jpg">
+                            </a>
+                        </div>
+                        <div class="col-xs-9 col-md-offset-6 col-lg-offset-7 col-md-5 col-lg-4">
+                            <ul class="header-rightNav nav ">
+                                <li class="headerRightNav-learnMore nav-item nav-item--subMenu js-navSubMenu nav-item--left">
+                                    <span class="nav-itemText js-navSubMenuToggle u-hideSmallScreen">
+                                        <span>Wi-CAR 알아보기</span>
+                                        <span class="nav-itemIcon nav-itemIcon--arrow"></span>
+                                    </span>
+                                    <span class="nav-itemText js-navSubMenuToggle u-smallScreenOnly">
+                                        <span>Wi-CAR 알아보기</span>
+                                        <span class="nav-itemIcon nav-itemIcon--arrow"></span>
+                                    </span>
+                                    <ul class="subNavList subNavList--left">
+                                        <li class="subNavList-item">
+                                            <a class="subNavList-link" href="{{url_for('carshare_app.explanation_page')}}">Wi-CAR는 무엇인가요?</a>
+                                        </li>
+                                        <li class="subNavList-item">
+                                            <a class="subNavList-link" href="{{url_for('carshare_app.renting_page')}}">차를 빌리고 싶어요</a>
+                                        </li>
+                                        <li class="subNavList-item">
+                                            <a class="subNavList-link" href="{{url_for('carshare_app.sharing_page')}}">차를 빌려주고 싶어요</a>
+                                        </li>
+                                    </li>
+                                </ul>
+                            </li>
+                            {% if session.get('email') %}
+                                <li class="headerRightNav-dashboard nav-item u-hideTinyScreen">
+                                    <div class="headerRightNav-dashboardContainer">
+                                        <a class="nav-itemText nav-itemText--link" href="{{url_for('carupload_app.get_car_list')}}">My Wi-CAR</a>
+                                    </div>
+                                </li>
+                                <li class="headerRightNav-account nav-item nav-item--subMenu  js-navSubMenu">
+                                    {% if session.get('profile_url')%}
+                                        <div class="js-navSubMenuToggle">
+                                            <img class="profilePhoto profilePhoto--small profilePhoto--round" src="./loginned_files/ECk0u3H4Q9SZnGfg2C99LQ.32x32.jpg" alt="">
+                                            <span class="nav-itemIcon nav-itemIcon--arrow"></span>
+                                        </div>
+                                    {% else %}
+                                        <span class="nav-itemText js-navSubMenuToggle u-hideSmallScreen">
+                                            <span>Welcome</span>
+                                            <span class="nav-itemIcon nav-itemIcon--arrow"></span>
+                                        </span>
+                                        <span class="nav-itemText js-navSubMenuToggle u-smallScreenOnly">
+                                            <span>Welcome</span>
+                                            <span class="nav-itemIcon nav-itemIcon--arrow"></span>
+                                        </span>
+                                    {% endif %}
+                                    <ul class="subNavList" id="mainSubNavHomePage">
+                                        <li class="subNavList-item subNavList-item--search">
+                                            <a class="subNavList-link" href="{{url_for('carbooking_app.car_search')}}">
+                                                자동차 찾기
+                                            </a>
+                                        </li>
+                                        <li class="subNavList-item u-tinyScreenOnly">
+                                            <a class="subNavList-link" href="{{url_for('carbooking_app.car_owner_setting')}}">
+                                                Wi-CAR 이용하기
+                                            </a>
+                                        </li>
+                                        <li class="subNavList-item subNavList-item--divider"></li>
+                                        <li class="subNavList-item">
+                                            <a class="subNavList-link" href="{{url_for('carshare_app.account_info')}}">내계정</a>
+                                        </li>
+                                        <li class="subNavList-item">
+                                            <a class="subNavList-link" href="{{url_for('carshare_app.earning_history')}}">수입</a>
+                                        </li>
+                                        <li class="subNavList-item subNavList-item--divider"></li>
+                                        <li class="subNavList-item">
+                                            <a class="subNavList-link" href="{{url_for('carshare_app.loginuser_info')}}">프로필</a>
+                                        </li>
+                                        <li class="subNavList-item">
+                                            <a class="subNavList-link" href="{{url_for('carbooking_app.booking_history')}}">이용내역</a>
+                                        </li>
+                                        <li class="subNavList-item subNavList-item--divider"></li>
+                                        <li class="subNavList-item">
+                                            <a class="subNavList-link" href="http://pf.kakao.com/_fJqWC" target="_blank">고객지원</a>
+                                        </li>
+                                        <li class="subNavList-item">
+                                            <a class="js-logoutLink subNavList-link" href="{{url_for('carshare_app.logout')}}">Log out</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li class="headerRightNav-login nav-item">
+                                    <a class="js-headerAuthLink dialog-link nav-itemText nav-itemText--link index-nav" href="#signup-dialog-login" data-toggle="modal">
+                                        로그인
+                                    </a>
+                                </li>
+                                <li class="headerRightNav-signup nav-item">
+                                    <a class="js-headerAuthLink dialog-link nav-itemText nav-itemText--link index-nav" id="signupButtonMain" href="#signup-dialog-initial" data-toggle="modal">
+                                        가입
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {%block header%}{% endblock%}
+            </header>
+            <!--endnav -->
+            <div id="pageContainer">
+                {% block content %}{% endblock %}
+            </div>
+            <footer class="container--fluid container--darkBackground footer js-footer ">
+                <div class="container">
+                    <div class="grid grid--withHugeVerticalSpacing">
+                        <div class="grid-item grid-item--9 grid-item--medium8 grid-item--small12">
+                            <section>
+                                <h6 class="u-footer-Only">Wi-CAR알아보기</h6>
+                                <ul class="footer-list footer-list--inline">
+                                    <li class="footer-listItem text--small u-footer-title">주식회사 쉐어몬스터즈</li>
+                                    <li class="footer-listItem">
+                                        <a href="{{url_for('carterms_app.about_page')}}">회사소개</a>
+                                    </li>
+                                    <li class="footer-listItem">
+                                        <a href="{{url_for('carterms_app.cancellation')}}">와이카정책</a>
+                                    </li>
+                                    <li class="footer-listItem">
+                                        <a href="{{url_for('carterms_app.term_service')}}">이용약관/개인정보취급 방침</a>
+                                    </li>
+                                    <li class="footer-listItem">
+                                        <a target="_blank" href="http://pf.kakao.com/_fJqWC">고객센터</a>
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
+                        <div class="grid-item grid-item--9 grid-item--medium8 grid-item--small12">
+                            <section>
+                                <div class="description">
+                                    <p class="footer-listItem">상호: 주식회사 쉐어몬스터즈 / 대표: 김태훈</p>
+                                    <p class="footer-listItem">주소 : 경기도 화성시 봉담읍 서봉산길 40</p>
+                                    <p class="footer-listItem">사업자등록번호 : 541-88-00891
+                                    </p>
+                                    <p class="footer-listItem">통신판매업신고 :제-화성봉담-0062 호</p>
+                                    <p class="footer-listItem">
+                                        <b>대표번호 : 070-4779-3812 / 고객문의 : thmon@sharemonsters.net</b>
+                                    </p>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <div id="signup-dialog-initial" class="modal fade authDialog" role="dialog">
+                <div class="login-modal-dialog">
+                    <div class="modal-content">
+                        <div class="login-header">
+                            <button type="button" class="login-close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <h4 class="login-dialog-header">회원가입</h4>
+                        <div class="dialog-content">
+                            <div class="container-fluid">
+                                <div class="row btn-login-modal">
+                                    <div class="col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                                        <fb:login-button
+                                            data-width="<100% or px>"
+                                            data-max-rows="1"
+                                            data-size="medium"
+                                            data-button-type="login_with"
+                                            data-show-faces="false"
+                                            data-auto-logout-link="false"
+                                            data-use-continue-as="false"
+                                            scope="public_profile,email"
+                                            onlogin="sendTokenToServer();">
+                                            <a class="button button--facebook button--large button--fluid" tabindex="1" href='javascript:sendTokenToServer()'>Facebook 로그인 &nbsp; &nbsp;</a>
+                                        </fb:login-button>
+                                    </div>
+                                </div>
+                                <div class="row btn-login-modal">
+                                    <div class="googleSigninButton col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                                        <span
+                                            class="logingoogle signinButton g-signin button--fluid"
+                                            data-scope="openid email profile"
+                                            data-clientid="151174455480-8mn38v751rfa0bol88hm2adpd4a0jvrs.apps.googleusercontent.com"
+                                            data-redirecturi="postmessage"
+                                            data-accesstype="offline"
+                                            data-cookiepolicy="single_host_origin"
+                                            data-callback="signInCallback"
+                                            data-approvalprompt="force">
+                                            <img class="google-mark" src='/static/images/googlemark.png'/>
+                                            Google 회원가입
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row btn-login-modal">
+                                    <div class="googleSigninButton col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                                        <a id="custom-login-btn" href="javascript:loginWithKakao()">
+                                            <img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="100%"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row btn-login-modal">
+                                    <div class="col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3 waitingResult"></div>
+                                </div>
+                                <div class="row btn-login-or">
+                                    <div class="googleSigninButton col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                                        <p class="or-line">
+                                            <span class="modal-or-signin">or</span></p>
+                                    </div>
+                                </div>
+                                <div class="row btn-login-modal">
+                                    <div class="col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                                        <a class="dialog-link button button--fluid login-modal-button" data-dialog-class="no-titlebar" href="{{url_for('carshare_app.signup_page')}}">회원가입하기</a>
+                                    </div>
+                                </div>
+                                <div class="row btn-login-modal">
+                                    <div class="col-md-8 col-sm-6   col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                                        <a class="dialog-link button button--fluid signup-modal-button" data-dialog-class="no-titlebar" href="{{url_for('carshare_app.login_page')}}">로그인하기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="signup-dialog-login" class="modal fade authDialog" role="dialog">
+                <div class="login-modal-dialog">
+                    <div class="modal-content">
+                        <div class="login-header">
+                            <button type="button" class="login-close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <h4 class="login-dialog-header">로그인</h4>
+                        <div class="dialog-content">
+                            <div class="container-fluid">
+                                <div class="row btn-login-modal">
+                                    <div class="col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                                        <fb:login-button data-width="100%" data-max-rows="1" data-size="medium" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false" scope="public_profile,email" onlogin="sendTokenToServer();">
+                                            <a class="button button--facebook button--large button--fluid" tabindex="1" href='javascript:sendTokenToServer()'>Facebook 로그인 &nbsp; &nbsp;</a>
+                                        </fb:login-button>
+                                    </div>
+                                </div>
+                                <div class="row btn-login-modal">
+                                    <div class="googleSigninButton col-md-8 col-sm-6 col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                                        <span
+                                            class="logingoogle signinButton g-signin button--fluid"
+                                            data-scope="openid email profile"
+                                            data-clientid="151174455480-8mn38v751rfa0bol88hm2adpd4a0jvrs.apps.googleusercontent.com"
+                                            data-redirecturi="postmessage"
+                                            data-accesstype="offline"
+                                            data-cookiepolicy="single_host_origin"
+                                            data-callback="signInCallback"
+                                            data-approvalprompt="force">
+                                            <img class="google-mark" src='/static/images/googlemark.png'/>
+                                            Google 로그인
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row btn-login-modal">
+                                    <div class="googleSigninButton col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                                        <a id="custom-login-btn" href="javascript:loginWithKakao()">
+                                            <img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="100%"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row btn-login-modal">
+                                    <div class="col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3 waitingResult"></div>
+                                </div>
+                                <div class="row btn-login-or">
+                                    <div class="googleSigninButton col-md-8 col-sm-6   col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                                        <p class="or-line">
+                                            <span class="modal-or-signin">or</span></p>
+                                    </div>
+                                </div>
+                                <div class="row btn-login-modal">
+                                    <div class="col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                                        <a class="dialog-link button button--fluid login-modal-button" data-dialog-class="no-titlebar" href="{{url_for('carshare_app.login_page')}}">로그인하기</a>
+                                    </div>
+                                </div>
+                                <div class="row btn-login-modal">
+                                    <div class="col-md-8 col-sm-6  col-xs-10 col-xs-offset-1 col-md-offset-2 col-sm-offset-3">
+                                        <a class="dialog-link button button--fluid signup-modal-button" data-dialog-class="no-titlebar" href="{{url_for('carshare_app.signup_page')}}">회원가입하기</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="agreePayment" class="modal fade authDialog" role="dialog">
+            <div class="modal-dialog">
+                <form id="agreePaymentForm">
+                    <div class="modal-content">
+                        <h4>약관에 동의해주세요</h4>
+                        <div class="modal-body">
+                            <input type="checkbox" id="checkall" name="checkall" value="True">
+                            <label for="checkall">전체선택</label>
+                        </div>
+                        <div class="modal-body ">
+                            <input class="term_agree" type="checkbox" id="term_service" name="term_service" value="true">
+                            <label for="term_service">쉐어몬스터즈 서비스
+                                <a href="{{url_for('carterms_app.term_service')}}" target="_blank">이용약관</a>에 동의합니다.</label>
+                        </div>
+                        <div class="modal-body">
+                            <input class="term_agree" type="checkbox" id="privacy" name="privacy" value="true">
+                            <label for="privacy">쉐어몬스터즈
+                                <a href="{{url_for('carterms_app.privacy')}}" target="_blank">개인정보 취급방침</a>에 동의합니다.</label>
+                        </div>
+                        <div class="modal-body">
+                            <p id="term_error" class="text-danger"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="button--green" type="submit">동의</button>
+                            <button type="button" class="button" data-dismiss="modal">취소</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% block modal %}{% endblock %}
+        <!-- <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script> -->
+        <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Array.prototype.includes,Array.prototype.find,Element.prototype.remove&flags=gated"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/color/jquery.color-2.1.2.min.js" integrity="sha256-H28SdxWrZ387Ldn0qogCzFiUDDxfPiNIyJX7BECQkDE=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script>
+            if (!!window.performance && window.performance.navigation.type === 2) {
+                window.location.reload();
+            }
+        </script>
+        <script type="text/javascript">
+            var csrf_token = "{{ csrf_token() }}";
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                    }
+                }
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                //최상단 체크박스 클릭
+                $("#checkall").click(function () {
+                    //클릭되었으면
+                    if ($("#checkall").prop("checked")) {
+                        //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+                        $(".term_agree").prop("checked", true);
+                        //클릭이 안되있으면
+                    } else {
+                        //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+                        $(".term_agree").prop("checked", false);
+                    }
+                })
+
+                function objectifyForm(formArray) { //serialize data function
+
+                    var returnArray = {};
+                    for (var i = 0; i < formArray.length; i++) {
+                        returnArray[formArray[i]['name']] = formArray[i]['value'];
+                    }
+                    return returnArray;
+                }
+
+                $("#agreePaymentForm").submit(function (e) {
+                    e.preventDefault();
+                    if ($("#term_service").is(":checked") && $("#privacy").is(":checked")) {
+                        var data = objectifyForm($("#agreePaymentForm").serializeArray());
+                        $.ajax({
+                            url: "{{url_for('carshare_app.agree_term')}}",
+                            type: 'POST',
+                            data: JSON.stringify(data),
+                            contentType: 'application/json',
+                            dataType: "json",
+                            success: function (result) {
+                                if (result && result['message'] == "success") {
+                                    $("#term_error").text("")
+                                    setTimeout(function () {
+                                        window.location.href = "/sendcode";
+                                    }, 50);
+                                    // 데이타 성공일때 이벤트 작성
+                                } else {
+                                    $("#term_error").text("통신에 실패하였습니다. 잠시후 다시 시도해주세요..")
+                                }
+                            }
+                        });
+                    } else {
+                        $("#term_error").text("약관에 동의해주세요.")
+                    }
+                });
+            })
+        </script>
+        <script>
+            var state = "{{STATE}}";
+            var urlajax = '/gconnect?state=' + state;
+
+            function signInCallback(authResult) {
+                if (authResult['code']) {
+                    // Hide the sign-in button now that the user is authorized
+                    $('.googleSigninButton').attr('style', 'display: none');
+                    // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
+                    $.ajax({
+                        type: 'POST',
+                        url: urlajax,
+                        processData: false,
+                        data: authResult['code'],
+                        contentType: 'application/octet-stream; charset=utf-8',
+                        success: function (result) {
+                            $('.waitingResult').text('잠시만 기다려주세요');
+                            // Handle or verify the server response if necessary.
+                            if (result) {
+                                if (result['first_time']) {
+                                    $("#signup-dialog-login").modal("hide");
+                                    $("#signup-dialog-initial").modal("hide");
+                                    $("#agreePayment").modal("show")
+
+                                    //   setTimeout(function() {     window.location.href = "/sendcode"; }, 50);
+                                } else {
+
+                                    setTimeout(function () {
+                                        if (result['next_url']) {
+                                            window.location.href = result['next_url'];
+                                        } else {
+                                            window.location.href = window.location.href;
+                                        }
+                                    }, 50);
+                                }
+                            } else if (authResult['error']) {
+                                console.log('There was an error: ' + authResult['error']);
+                            } else {
+                                $('.waitingResult').text('페이지 접속해 실패했습니다. 잠시 후 다시 시도해주세요.');
+                            }
+                        },
+                        error: function (result) {
+                            $(".waitingResult").html(result.responseText)
+                            setTimeout(function () {
+                                window.location.href = "/";
+                            }, 1000);
+                        }
+
+                    });
+                }
+            }
+        </script>
+        <script type="text/javascript">
+            function initHeaderNavigation() {
+                var submenus = $('.js-navSubMenu');
+                var visibleClass = 'is-open';
+                var body = $('body');
+                if (window.isTouchEnabled) {
+                    // TODO: The touch screen case can share more logic with non-touch screen
+                    submenus.children('.js-navSubMenuToggle').on('click', function () {
+                        var menu = $(this).closest('.js-navSubMenu');
+                        var menuIsSelected = menu.hasClass(visibleClass);
+                        submenus.removeClass(visibleClass);
+                        if (!menuIsSelected) {
+                            menu.addClass(visibleClass);
+                        }
+                        return false;
+                    });
+                } else {
+                    var showMenu = function (menu) {
+                        submenus.removeClass(visibleClass);
+                        $(menu).addClass(visibleClass);
+                        var openerWidth = $(menu).outerWidth();
+                        var menuWidth = $(menu).children('ul').outerWidth();
+                        if (openerWidth > menuWidth) {
+                            // TODO: Is this still necessary?
+                            $(menu).children('.hideshadow').css('width', '' + menuWidth + 'px');
+                        }
+
+                        return false;
+                    };
+
+                    submenus.hover(function () {
+
+                        if (typeof(this.timeout) !== 'undefined' && this.timeout !== null) {
+                            clearTimeout(this.timeout);
+                            this.timeout = null;
+                        }
+
+                        var _this = $(this);
+
+                        if (submenus.hasClass(visibleClass)) {
+                            clearTimeout(this.timeout);
+                            this.timeout = setTimeout(function () {
+                                showMenu(_this);
+                            }, 75);
+                        } else {
+                            showMenu(_this);
+                        }
+                    }, function () {
+                        var _this = this;
+                        this.timeout = setTimeout(function () {
+                            $(_this).removeClass(visibleClass);
+                            _this.timeout = null;
+                        }, 150);
+                    });
+                }
+                body.on('click', function () {
+                    if (window.isTouchEnabled) {
+                        submenus.removeClass(visibleClass);
+                    }
+                });
+            }
+            initHeaderNavigation();
+        </script>
+        <!--FACEBOOK SIGN IN -->
+        <script type='text/javascript'>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '1971600729724473', cookie: true, // enable cookies to allow the server to access
+                    // the session
+                    xfbml: true, // parse social plugins on this page
+                    version: 'v2.8' // use version 2.2
+                });
+            };
+            // Load the SDK asynchronously
+            (function (d, s, id) {
+                var js,
+                    fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) 
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.12&appId=1971600729724473&autoLogAppEvents=1';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+            // Here we run a very simple test of the Graph API after login is
+            FB.Event.subscribe('auth.login', sendTokenToServer);
+
+            // successful.  See statusChangeCallback() for when this call is made.
+            function sendTokenToServer() {
+                var access_token = FB.getAuthResponse()['accessToken'];
+                FB.api('/me', function (response) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/fbconnect?state={{STATE}}',
+                        processData: false,
+                        data: access_token,
+                        contentType: 'application/octet-stream; charset=utf-8',
+                        success: function (result) {
+                            // Handle or verify the server response if necessary.
+                            if (result) {
+                                $('.waitingResult').text('잠시만 기다려주세요.')
+                                if (result['first_time']) {
+                                    $("#signup-dialog-login").modal("hide");
+                                    $("#signup-dialog-initial").modal("hide");
+                                    $("#agreePayment").modal("show")
+                                } else {
+                                    if (result['next_url']) {
+                                        window.location.href = result['next_url'];
+                                    } else {
+                                        window.location.href = window.location.href;
+                                    }
+                                }
+                            } else {
+                                $('.waitingResult').text('로그인에 실패하였습니다. 잠시 후 다시 시작해주세요.');
+                            }
+                        }
+
+                    });
+                });
+            }
+        </script>
+        <!--KAKAO Sign In -->
+        <script type='text/javascript'>
+            Kakao.init('8ac83c35896120c8541533ff8345e7b9');
+            // 카카오 로그인 버튼을 생성합니다.
+            function loginWithKakao() {
+                // 로그인 창을 띄웁니다.
+                Kakao.Auth.login({
+                    success: function (authObj) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/kakao_oauth',
+                            processData: false,
+                            data: JSON.stringify(authObj),
+                            contentType: 'application/octet-stream; charset=utf-8',
+                            success: function (result) {
+                                // Handle or verify the server response if necessary.
+                                if (result && result['message'] == "success") {
+                                    if (result['first_time']) {
+                                        $("#signup-dialog-login").modal("hide");
+                                        $("#signup-dialog-initial").modal("hide");
+                                        $("#agreePayment").modal("show")
+                                    } else {
+                                        if (result['next_url']) {
+                                            window.location.href = result['next_url'];
+                                        } else {
+                                            window.location.href = window.location.href;
+                                        }
+                                    }
+                                } else {
+                                    $('.waitingResult').text('로그인에 실패하였습니다. 잠시 후 다시 시작해주세요.');
+                                }
+                            }
+
+                        });
+                    },
+                    fail: function (err) {
+                        console.log("ERROR")
+                        alert(JSON.stringify(err));
+                    }
+                });
+            };
+        </script>
+        {% block script %}{% endblock %}
+    </body>
+</html>

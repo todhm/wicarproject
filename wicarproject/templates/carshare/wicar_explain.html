@@ -1,0 +1,131 @@
+{% extends "base_temp.html"%}
+
+
+{% block style%}
+<link rel="stylesheet" type="text/css" href={{ url_for('static',filename='turoabout_files/index.8b89a72d.css')}} >
+{% endblock %}
+    <!--BEGIN_CONTENT-->
+{% block content%}
+<section class="container container--fluid container--darkBackground interstitial interstitial--howItWorks u-table">
+    <div class="container u-alignCenter u-tableCell u-verticalAlignMiddle">
+        <h1>와이카 이용법!</h1>
+
+        <h5>24시간 이상 대여할 때는 와이카에서! </h5>
+        <div class="buttonWrapper">
+            <a href="{{url_for('carbooking_app.car_search')}}" class="button button--green button--large">차를 빌릴래요</a>
+            <a href="{{url_for('carupload_app.get_car_list')}}" class="button button--purple button--large">차를 빌려줄래요</a>
+        </div>
+        {% from "_helpers.html" import render_btn %}
+        {{ render_btn('explain')}}
+    </div>
+</section>
+<section class="container container--fluid interstitial interstitial--road">
+    <div class="container">
+        <div class="timeline timeline--renter timeline--left">
+            <h4 class="timeline-header text--green u-alignCenter">차 빌리기</h4>
+
+            <ol class="timeline-events">
+                <li class="timeline-event timeline-event--middle timeline-event--position0">
+                    <span class="timeline-eventArrow"></span>
+                    <span class="timeline-eventMarker"></span>
+                    <h6 class="subheader timeline-eventTitle">회원가입하기</h6>
+
+                    <p class="timeline-eventText">Naver, Google, Facebook, 카카오톡, 혹은 개인 이메일을 통해 간편하게 Wi-Car에 가입하세요. Wi-Car는 공유자와 대여자의 안전을 위해 운전면허증일련번호를 통해 운전자를 확인합니다.</p>
+                </li>
+                <li class="timeline-event timeline-event--middle timeline-event--position1">
+                    <span class="timeline-eventArrow"></span>
+                    <span class="timeline-eventMarker"></span>
+                    <h6 class="subheader timeline-eventTitle">다양한 자동차를 주변에서 찾아보세요.</h6>
+
+                    <p class="timeline-eventText">원하는 날짜와 장소에서 필요한 자동차를 찾아보세요.</p>
+                </li>
+                <li class="timeline-event timeline-event--position3">
+                    <span class="timeline-eventArrow"></span>
+                    <span class="timeline-eventMarker"></span>
+                    <h6 class="subheader timeline-eventTitle">예약하기</h6>
+
+                    <p class="timeline-eventText">차량공유를 요청하면 예약정보가 오너에게 전달됩니다. 오너가 이를 확인하고 수락하면 예약이 완료됩니다. </p>
+                </li>
+                <li class="timeline-milestone timeline-event--position4">
+                    픽업
+                </li>
+                <li class="timeline-event timeline-event--position5">
+                    <span class="timeline-eventArrow"></span>
+                    <span class="timeline-eventMarker timeline-eventMarker--renterAndOwner"></span>
+                    <h6 class="subheader timeline-eventTitle">자동차 받아보기</h6>
+
+                    <p class="timeline-eventText">배송 서비스를 제공하는 자동차를 선택하면 고객님과 차주가 협의하는 장소에 차량을 배달받을 수 있습니다.</p>
+
+                    <p class="timeline-eventText">약속된 장소와 시간에 차를 받아보고 신분조회 후 즐겁고 안전한 공유를 실천하기. </p>
+                </li>
+                <li class="timeline-event timeline-event--middle timeline-event--position6">
+                    <span class="timeline-eventArrow"></span>
+                    <span class="timeline-eventMarker timeline-eventMarker--renterAndOwner"></span>
+                    <h6 class="subheader timeline-eventTitle">Wi-CAR하세요</h6>
+
+                    <p class="timeline-eventText">여러분이 필요했던 자동차와 함께 최고의 공유경험을 만드세요.</p>
+                </li>
+                <li class="timeline-milestone timeline-event--position7">
+                    돌아오기
+                </li>
+                <li class="timeline-event timeline-event--middle timeline-event--position8">
+                    <span class="timeline-eventArrow"></span>
+                    <span class="timeline-eventMarker timeline-eventMarker--renterAndOwner"></span>
+                    <h6 class="subheader timeline-eventTitle">약속된 장소에 차를 돌려놓아주시면 됩니다.</h6>
+                    <p class="timeline-eventText"> 물론! 차는 청결하게 사용 해주시고 기존에 있던 연료량 만큼 꼭! 꼭! 보충 해주시면 더욱 더 신뢰받는 공유 커뮤니티를 만들 수 있을거에요!</p>
+                </li>
+                <li class="timeline-event timeline-event--middle timeline-event--position9">
+                    <span class="timeline-eventArrow"></span>
+                    <span class="timeline-eventMarker timeline-eventMarker--renterAndOwner"></span>
+                    <h6 class="subheader timeline-eventTitle">리뷰남기기</h6>
+                    <p class="timeline-eventText">Wi-CAR를 통해서 차주에대한 리뷰를 남겨주세요.</p>
+                </li>
+            </ol>
+        </div>
+        <div class="timeline timeline--owner timeline--right">
+            <h4 class="timeline-header text--purple u-alignCenter">차 빌려주기</h4>
+            <ol class="timeline-events">
+                <li class="timeline-event timeline-event--position0">
+                    <span class="timeline-eventArrow"></span>
+                    <span class="timeline-eventMarker"></span>
+                    <h6 class="subheader timeline-eventTitle">자동차 올리기</h6>
+
+                    <p class="timeline-eventText">Wi-CAR에 협력업체님의 자동차를 올려보세요. 멋진 실제 사진으로 업주님의 일꾼들을 광고하세요. 달력에 고객님이 자동차를 빌려줄 수 있는 날짜를 표시해서 원활하고 효율적으로 자동차를 빌려주세요.</p>
+
+                    <p class="timeline-eventText">고객님의 달력을 업데이트 시켜서 대여자에게 고객님이 언제 자동차를 빌려줄 수 있는지 알려주세요. .</p>
+                </li>
+                <li class="timeline-event timeline-event--bottom timeline-event--position2">
+                    <span class="timeline-eventArrow"></span>
+                    <span class="timeline-eventMarker"></span>
+                    <span class="dot two owner"></span>
+                    <h6 class="subheader timeline-eventTitle">대여요청에 답장하기</h6>
+
+                    <p class="timeline-eventText">소중한 고객님이 업주님들의 자동차를 대여하기 원하신다면 이메일과 핸드폰으로 알림을 보내드립니다  </p>
+                </li>
+                <li class="timeline-event timeline-event--position5">
+                    <span class="timeline-eventArrow"></span>
+                    <h6 class="subheader timeline-eventTitle">대여자를 만나세요.</h6>
+
+                    <p class="timeline-eventText">대여자와 언제 어디서 만날지 결정하고 만남이 성사되면 대여자의 면허증을 확인하세요. 차를 대여해주기 전에 자동차의 연료를 확인하세요.</p>
+                </li>
+                <li class="timeline-event timeline-event--middle timeline-event--position6">
+                    <span class="timeline-eventArrow"></span>
+                    <h6 class="subheader timeline-eventTitle">Wi-CAR하세요</h6>
+
+                    <p class="timeline-eventText">Wi-CAR와 함께 새로운 방식으로 수익을 창출해보세요.</p>
+                </li>
+                <li class="timeline-event timeline-event--middle timeline-event--position8">
+                    <span class="timeline-eventArrow"></span>
+                    <h6 class="subheader timeline-eventTitle">자동차 받으러가기</h6>
+                    <p class="timeline-eventText">대여자를 만나서 차를 돌려받으세요.</p>
+                </li>
+                <li class="timeline-event timeline-event--middle timeline-event--position9">
+                    <span class="timeline-eventArrow"></span>
+                    <h6 class="subheader timeline-eventTitle">리뷰남기기</h6>
+                    <p class="timeline-eventText">Wi-CAR를 통해서 대여자에대한 리뷰를 남겨주세요!</p>
+                </li>
+            </ol>
+        </div>
+    </div>
+</section>
+{% endblock %}
