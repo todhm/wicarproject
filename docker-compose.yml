@@ -87,7 +87,7 @@ services:
         - backend
     ports:
       - 6379:6379
-      
+
   mongo:
     container_name: mongo
     image: mongo:3.4

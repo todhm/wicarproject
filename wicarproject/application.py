@@ -9,13 +9,10 @@ from flask_migrate import Migrate
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from flask_cors import CORS
 from flask_wtf.csrf import CSRFProtect
-from logging.handlers import SMTPHandler, RotatingFileHandler
 import logging
-from log4mongo.handlers import MongoHandler
-from flask_wtf.csrf import CSRFProtect
 from utilities.flask_tracking import Tracking
 
-ADMIN=['hmmon@sharemonsters.net']
+
 db = SQLAlchemy()
 mdb = MongoEngine()
 migrate = Migrate()
