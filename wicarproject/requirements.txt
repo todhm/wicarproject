@@ -39,7 +39,7 @@ google-auth==1.4.1
 google-auth-httplib2==0.0.3
 google-auth-oauthlib==0.2.0
 gunicorn==19.7.1
-httplib2==0.10.3
+httplib2==0.18.0
 iamport-rest-client==0.7.0
 idna==2.6
 infinity==1.4
