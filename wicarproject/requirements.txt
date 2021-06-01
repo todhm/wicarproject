@@ -83,7 +83,7 @@ SQLAlchemy==1.2.3
 SQLAlchemy-Utils==0.33.0
 Unidecode==1.0.22
 uritemplate==3.0.0
-urllib3==1.22
+urllib3==1.26.5
 validators==0.12.1
 vine==1.1.4
 visitor==0.1.3
