@@ -17,7 +17,7 @@
     "react-loading": "^1.0.4",
     "react-modal": "^3.3.2",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "^1.1.1",
+    "react-scripts": "^5.0.1",
     "react-select": "^1.2.1",
     "sort-by": "^1.2.0",
     "zepto-browserify": "^1.1.6-1"
